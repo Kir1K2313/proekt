@@ -1,0 +1,60 @@
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: D:\Буренин Кирилл\редактор\bin\Debug\редактор.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x6626E2F0 в функции SymGetLineFromAddrW64(). Попытка прочесть данные по адресу 0x03118988 в модуле c:\codeblocks\codeblocks\mingw\include\Windows\MgwHelp32.dll. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#2: TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400], Instance: 0x005042FC (32-bit), Flags: CMdrE0, Thread: 0x2E84 (Canvas), GetLastError(): 87 (Параметр задан неверно). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x6626E2F0 in c:\codeblocks\codeblocks\mingw\include\Windows\MgwHelp32.dll: SymGetLineFromAddrW64()
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in bool {anonymous}::TX::_txSymGetFromAddr(void*, {anonymous}::TX::Win32::SYMBOL_INFO**, {anonymous}::TX::Win32::IMAGEHLP_LINE64**, const char**, const char**, int) at c:\codeblocks\codeblocks\mingw\include\txlib.h (12249):
+
+  12247: $   if (!addr && process)
+  12248:         {
+=>12249: $       _TX_CALL (LIB_::SymCleanup, (process));
+  12250: 
+  12251: $       process = NULL;
+
+# 1 in void {anonymous}::TX::_txCleanup() at c:\codeblocks\codeblocks\mingw\include\txlib.h (9122):
+
+   9120: $   _flushall();
+   9121: 
+=> 9122: $   _txSymGetFromAddr (NULL);
+   9123: 
+   9124:     // That's all, folks
+
+# 2 in unsigned int {anonymous}::TX::_txCanvas_ThreadProc(void*) at c:\codeblocks\codeblocks\mingw\include\txlib.h (9769):
+
+   9767: $   if (_txRunning && _txMain)         // Main window is destroyed but main() is still running.
+   9768:         {                              // No chances for good termination, so use exit().
+=> 9769: $       _txCleanup();
+   9770: $       ::exit ((int) msg.wParam);     //-V202 //-V2509 //-V2014
+   9771:         }
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\codeblocks\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 21 2022 17:58:53, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Sep 21 2022 17:59:11
+
+Run file:	D:\Буренин Кирилл\редактор\bin\Debug\редактор.exe
+Directory:	D:\Буренин Кирилл\редактор
+
+--------------------------------------------------

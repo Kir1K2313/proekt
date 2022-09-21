@@ -1,19 +1,27 @@
 
 #include "TXLib.h"
 
-void drawButton(int x, int y, const char* text)
+struct button
+{
+   int x;
+   int y;
+   const char* text;
+};
+
+void drawButton(button btn)
 {
 //x = 100;y = 30;
       txSetColor(TX_BLACK);
       txSetFillColor(TX_GRAY);
-      Win32::RoundRect(txDC(), x+5, y+5, x+115, y+45, 30, 30);
+      Win32::RoundRect(txDC(), btn.x+5, btn.y+5, btn.x+115, btn.y+45, 30, 30);
       txSetColor(TX_BLACK);
       txSetFillColor(TX_WHITE);
-      Win32::RoundRect(txDC(), x, y , x+110, y+40, 30, 30);
+      Win32::RoundRect(txDC(), btn.x, btn.y , btn.x+110, btn.y+40, 30, 30);
       txSetColor(TX_BLACK);
       txSelectFont("Times New Roman", 28);
-      txDrawText(x,y,x+110,y+40, text);
+      txDrawText(btn.x,btn.y,btn.x+110,btn.y+40, btn.text);
 }
+
 int main()
 {
     txCreateWindow (1200, 800);
@@ -31,14 +39,36 @@ int main()
       txSetFillColor(TX_GRAY);
       txClear();
 
-      drawButton(100, 30, "Корпус"); //кнопка корпус
-      drawButton(270, 30, "Колёса"); //кнопка колёса
-      drawButton(440, 30, "Cтёкла"); //кнопка стёкла
-      drawButton(630, 30, "Наклейки");// кнопка наклейки
 
-      txTransparentBlt(txDC(), 300, 250, 459,394, korpus, 0, 0, TX_WHITE);
-      txTransparentBlt(txDC(), 50, 100, 259,194, korpus2, 0, 0, TX_WHITE);
-      txTransparentBlt(txDC(), 50, 100, 309,194, korpus3, 0, 0, TX_WHITE);
+      button btn[10];
+      btn[0]={100, 30, "Корпус"};//кнопка корпус
+      btn[1]={270, 30, "Колёса"};//кнопка колёса
+      btn[2]={440, 30, "Cтёкла"};//кнопка стёкла
+      btn[3]={630, 30, "Наклейки"};//кнопка наклейки
+
+      for(int nk=0; nk<4; nk++)
+      {
+         drawButton(btn[nk]);
+      }
+      /*
+      drawButton(btn[0]);
+      drawButton(btn[1]);
+      drawButton(btn[2]);
+      drawButton(btn[3]);
+      */
+      //txTransparentBlt(txDC(), 300, 250, 459,394, korpus, 0, 0, TX_WHITE);
+     // txTransparentBlt(txDC(), 50, 100, 459,394, korpus2, 0, 0, TX_WHITE);
+      //txTransparentBlt(txDC(), 50, 100, 509,394, korpus3, 0, 0, TX_WHITE);
+
+
+      if(txMouseButtons() == 1 &&
+        txMouseX() >= btn[0].x &&
+        txMouseX() <= btn[0].x+110 &&
+        txMouseY() >= btn[0].y &&
+        txMouseY() <= btn[0].y+40)
+      {
+        txTransparentBlt(txDC(), 300, 250, 459,394, korpus, 0, 0, TX_WHITE);
+      }
 
       txSleep(50);
       txEnd();
