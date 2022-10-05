@@ -1,27 +1,7 @@
 
 #include "TXLib.h"
-//структур кнопки
-struct button
-{
-   int x;
-   int y;
-   const char* text;
-};
- 
-//функция кнопки
-void drawButton(button btn)
-{
-//x = 100;y = 30;
-      txSetColor(TX_BLACK);
-      txSetFillColor(TX_GRAY);
-      Win32::RoundRect(txDC(), btn.x+5, btn.y+5, btn.x+115, btn.y+45, 30, 30);
-      txSetColor(TX_BLACK);
-      txSetFillColor(TX_WHITE);
-      Win32::RoundRect(txDC(), btn.x, btn.y , btn.x+110, btn.y+40, 30, 30);
-      txSetColor(TX_BLACK);
-      txSelectFont("Times New Roman", 28);
-      txDrawText(btn.x,btn.y,btn.x+110,btn.y+40, btn.text);
-}
+#include "button.cpp"
+#include "pictures.cpp"
 
 int main()
 {
@@ -29,9 +9,29 @@ int main()
     txDisableAutoPause();
     txTextCursor (false);
 
-    HDC korpus = txLoadImage("Pictures/корпус1.bmp");
-    HDC korpus2 = txLoadImage("Pictures/корпус2.bmp");
-    HDC korpus3 = txLoadImage("Pictures/корпус3.bmp");
+     //Массив кнопок
+      Button btn[10];
+      btn[0]={100, 30, "Корпус"};//кнопка корпус
+      btn[1]={270, 30, "Колёса"};//кнопка колёса
+      btn[2]={440, 30, "Cтёкла"};//кнопка стёкла
+      btn[3]={630, 30, "Наклейки"};//кнопка наклейки
+
+      Pictures menuPicture[12];
+      menuPicture[0] = {50,100, txLoadImage("Pictures/корпус1.bmp"), 500, 154, 200, 100};
+      menuPicture[1] = {50,200, txLoadImage("Pictures/корпус2.bmp"), 200, 180, 200, 150};
+      menuPicture[2] = {50,300, txLoadImage("Pictures/корпус3.bmp"), 230, 150, 230, 150};
+
+      menuPicture[3] = {50,100, txLoadImage("Pictures/наклейка1.bmp"),30, 39, 100, 70};
+      menuPicture[4] = {50,200, txLoadImage("Pictures/наклейка2.bmp"),40, 50, 100, 70};
+      menuPicture[5] = {50,300, txLoadImage("Pictures/наклейка3.bmp"),100, 70, 100, 70};
+
+      menuPicture[6] = {50,100, txLoadImage("Pictures/колесо1.bmp"),85, 68, 100, 50};
+      menuPicture[7] = {50,200, txLoadImage("Pictures/колесо2.bmp"),150, 100, 100, 50};
+      menuPicture[8] = {50,300, txLoadImage("Pictures/колесо3.bmp"),150, 125, 100, 50};
+
+    bool korpusvisible = false;
+    bool nakleikavisible = false;
+    bool kolesovisible = false;
 
     while(!GetAsyncKeyState(VK_ESCAPE))
     {
@@ -39,42 +39,60 @@ int main()
       txSetColor(TX_WHITE);
       txSetFillColor(TX_GRAY);
       txClear();
-
-      //Массив кнопок
-      button btn[10];
-      btn[0]={100, 30, "Корпус"};//кнопка корпус
-      btn[1]={270, 30, "Колёса"};//кнопка колёса
-      btn[2]={440, 30, "Cтёкла"};//кнопка стёкла
-      btn[3]={630, 30, "Наклейки"};//кнопка наклейки
-      
       //Рисование кнопок
-      for(int nk=0; nk<7; nk++)
+      for(int nk=0; nk<4; nk++)
       {
          drawButton(btn[nk]);
       }
- 
-      //txTransparentBlt(txDC(), 300, 250, 459,394, korpus, 0, 0, TX_WHITE);
-     // txTransparentBlt(txDC(), 50, 100, 459,394, korpus2, 0, 0, TX_WHITE);
-      //txTransparentBlt(txDC(), 50, 100, 509,394, korpus3, 0, 0, TX_WHITE);
+
+
 
       //Клик на кнопку корпус
-      if(txMouseButtons() == 1 &&
-        txMouseX() >= btn[0].x &&
-        txMouseX() <= btn[0].x+110 &&
-        txMouseY() >= btn[0].y &&
-        txMouseY() <= btn[0].y+40)
+      if(click(btn[0]))
       {
-        txTransparentBlt(txDC(), 300, 250, 459,394, korpus, 0, 0, TX_WHITE);
+       korpusvisible = true;
+       nakleikavisible = false;
+       kolesovisible = false;
+      }
+      if(click(btn[1]))
+      {
+       korpusvisible = false;
+       nakleikavisible = false;
+       kolesovisible = true;
+      }
+      if(click(btn[3]))
+      {
+       korpusvisible = false;
+       nakleikavisible = true;
+       kolesovisible = false;
+      }
+
+      if(korpusvisible)
+      {
+         for(int npic=0; npic<= 2; npic++)
+         {
+          drawPicture(menuPicture[npic]);
+         }
+      }
+      if(nakleikavisible)
+      {
+         for(int npic=3; npic<=5; npic++)
+         {
+          drawPicture(menuPicture[npic]);
+         }
+      }
+      if(kolesovisible)
+      {
+         for(int npic=6; npic<=8; npic++)
+         {
+          drawPicture(menuPicture[npic]);
+         }
       }
 
       txSleep(50);
       txEnd();
 
      }
-
-    txDeleteDC(korpus);
-    txDeleteDC(korpus2);
-    txDeleteDC(korpus3);
 
     return 0;
 }

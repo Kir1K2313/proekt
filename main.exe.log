@@ -1,0 +1,280 @@
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: D:\Буренин Кирилл\редактор\main.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x75C995F8 в функции strchr(). Попытка прочесть данные по адресу 0x00000001 в модуле C:\Windows\System32\msvcrt.dll. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400], Instance: 0x005042FC (32-bit), Flags: CMdRE0, Thread: 0x2540 (Main), GetLastError(): 6 (Неверный дескриптор). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x75C995F8 in C:\Windows\System32\msvcrt.dll: strchr()
+
+# 1 0x0042BFDD in D:\Буренин Кирилл\редактор\main.exe: drawButton() at D:/Буренин Кирилл/редактор/main.cpp (24):
+
+     22:       txSetColor(TX_BLACK);
+     23:       txSelectFont("Times New Roman", 28);
+=>   24:       txDrawText(btn.x,btn.y,btn.x+110,btn.y+40, btn.text);
+     25: }
+     26: 
+
+# 2 0x0042C433 in D:\Буренин Кирилл\редактор\main.exe: main() at D:/Буренин Кирилл/редактор/main.cpp (87):
+
+     85:       for(int nk=0; nk<7; nk++)
+     86:       {
+=>   87:          drawButton(btn[nk]);
+     88:       }
+     89: 
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in bool {anonymous}::TX::txDrawText(double, double, double, double, const char*, unsigned int, HDC) at c:\codeblocks\codeblocks\mingw\include\txlib.h (13403):
+
+  13401: $   RECT r = { ROUND (x0), ROUND (y0), ROUND (x1), ROUND (y1) };
+  13402: 
+=>13403: $   if (!strchr (text, '\n')) format |= DT_SINGLELINE;
+  13404: 
+  13405: $   unsigned prev = txSetTextAlign (TA_LEFT | TA_TOP | TA_NOUPDATECP, dc);
+
+# 1 in void drawButton(button) at D:\Буренин Кирилл\редактор\main.cpp (24):
+
+     22:       txSetColor(TX_BLACK);
+     23:       txSelectFont("Times New Roman", 28);
+=>   24:       txDrawText(btn.x,btn.y,btn.x+110,btn.y+40, btn.text);
+     25: }
+     26: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\codeblocks\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 30 2022 19:05:10, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Sep 30 2022 19:05:25
+
+Run file:	D:\Буренин Кирилл\редактор\main.exe
+Directory:	D:\Буренин Кирилл\редактор
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\Буренин Кирилл\редактор\main.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x75C995F8 в функции strchr(). Попытка прочесть данные по адресу 0x00000001 в модуле C:\Windows\System32\msvcrt.dll. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400], Instance: 0x005042FC (32-bit), Flags: CMdRE0, Thread: 0x2540 (Main), GetLastError(): 6 (Неверный дескриптор). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x75C995F8 in C:\Windows\System32\msvcrt.dll: strchr()
+
+# 1 0x0042BFDD in D:\Буренин Кирилл\редактор\main.exe: drawButton() at D:/Буренин Кирилл/редактор/main.cpp (24):
+
+     22:       txSetColor(TX_BLACK);
+     23:       txSelectFont("Times New Roman", 28);
+=>   24:       txDrawText(btn.x,btn.y,btn.x+110,btn.y+40, btn.text);
+     25: }
+     26: 
+
+# 2 0x0042C433 in D:\Буренин Кирилл\редактор\main.exe: main() at D:/Буренин Кирилл/редактор/main.cpp (87):
+
+     85:       for(int nk=0; nk<7; nk++)
+     86:       {
+=>   87:          drawButton(btn[nk]);
+     88:       }
+     89: 
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in bool {anonymous}::TX::txDrawText(double, double, double, double, const char*, unsigned int, HDC) at c:\codeblocks\codeblocks\mingw\include\txlib.h (13403):
+
+  13401: $   RECT r = { ROUND (x0), ROUND (y0), ROUND (x1), ROUND (y1) };
+  13402: 
+=>13403: $   if (!strchr (text, '\n')) format |= DT_SINGLELINE;
+  13404: 
+  13405: $   unsigned prev = txSetTextAlign (TA_LEFT | TA_TOP | TA_NOUPDATECP, dc);
+
+# 1 in void drawButton(button) at D:\Буренин Кирилл\редактор\main.cpp (24):
+
+     22:       txSetColor(TX_BLACK);
+     23:       txSelectFont("Times New Roman", 28);
+=>   24:       txDrawText(btn.x,btn.y,btn.x+110,btn.y+40, btn.text);
+     25: }
+     26: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\codeblocks\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 30 2022 19:05:10, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Sep 30 2022 19:05:24
+
+Run file:	D:\Буренин Кирилл\редактор\main.exe
+Directory:	D:\Буренин Кирилл\редактор
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: D:\Буренин Кирилл\редактор\main.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x75C995F8 в функции strchr(). Попытка прочесть данные по адресу 0x00000001 в модуле C:\Windows\System32\msvcrt.dll. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400], Instance: 0x005042FC (32-bit), Flags: CMdRE0, Thread: 0x16E0 (Main), GetLastError(): 6 (Неверный дескриптор). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x75C995F8 in C:\Windows\System32\msvcrt.dll: strchr()
+
+# 1 0x0042BFDD in D:\Буренин Кирилл\редактор\main.exe: drawButton() at D:/Буренин Кирилл/редактор/main.cpp (24):
+
+     22:       txSetColor(TX_BLACK);
+     23:       txSelectFont("Times New Roman", 28);
+=>   24:       txDrawText(btn.x,btn.y,btn.x+110,btn.y+40, btn.text);
+     25: }
+     26: 
+
+# 2 0x0042C433 in D:\Буренин Кирилл\редактор\main.exe: main() at D:/Буренин Кирилл/редактор/main.cpp (87):
+
+     85:       for(int nk=0; nk<7; nk++)
+     86:       {
+=>   87:          drawButton(btn[nk]);
+     88:       }
+     89: 
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in bool {anonymous}::TX::txDrawText(double, double, double, double, const char*, unsigned int, HDC) at c:\codeblocks\codeblocks\mingw\include\txlib.h (13403):
+
+  13401: $   RECT r = { ROUND (x0), ROUND (y0), ROUND (x1), ROUND (y1) };
+  13402: 
+=>13403: $   if (!strchr (text, '\n')) format |= DT_SINGLELINE;
+  13404: 
+  13405: $   unsigned prev = txSetTextAlign (TA_LEFT | TA_TOP | TA_NOUPDATECP, dc);
+
+# 1 in void drawButton(Button) at D:\Буренин Кирилл\редактор\main.cpp (24):
+
+     22:       txSetColor(TX_BLACK);
+     23:       txSelectFont("Times New Roman", 28);
+=>   24:       txDrawText(btn.x,btn.y,btn.x+110,btn.y+40, btn.text);
+     25: }
+     26: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\codeblocks\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 30 2022 19:07:09, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Sep 30 2022 19:07:24
+
+Run file:	D:\Буренин Кирилл\редактор\main.exe
+Directory:	D:\Буренин Кирилл\редактор
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\Буренин Кирилл\редактор\main.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x75C995F8 в функции strchr(). Попытка прочесть данные по адресу 0x00000001 в модуле C:\Windows\System32\msvcrt.dll. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400], Instance: 0x005042FC (32-bit), Flags: CMdRE0, Thread: 0x16E0 (Main), GetLastError(): 6 (Неверный дескриптор). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x75C995F8 in C:\Windows\System32\msvcrt.dll: strchr()
+
+# 1 0x0042BFDD in D:\Буренин Кирилл\редактор\main.exe: drawButton() at D:/Буренин Кирилл/редактор/main.cpp (24):
+
+     22:       txSetColor(TX_BLACK);
+     23:       txSelectFont("Times New Roman", 28);
+=>   24:       txDrawText(btn.x,btn.y,btn.x+110,btn.y+40, btn.text);
+     25: }
+     26: 
+
+# 2 0x0042C433 in D:\Буренин Кирилл\редактор\main.exe: main() at D:/Буренин Кирилл/редактор/main.cpp (87):
+
+     85:       for(int nk=0; nk<7; nk++)
+     86:       {
+=>   87:          drawButton(btn[nk]);
+     88:       }
+     89: 
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in bool {anonymous}::TX::txDrawText(double, double, double, double, const char*, unsigned int, HDC) at c:\codeblocks\codeblocks\mingw\include\txlib.h (13403):
+
+  13401: $   RECT r = { ROUND (x0), ROUND (y0), ROUND (x1), ROUND (y1) };
+  13402: 
+=>13403: $   if (!strchr (text, '\n')) format |= DT_SINGLELINE;
+  13404: 
+  13405: $   unsigned prev = txSetTextAlign (TA_LEFT | TA_TOP | TA_NOUPDATECP, dc);
+
+# 1 in void drawButton(Button) at D:\Буренин Кирилл\редактор\main.cpp (24):
+
+     22:       txSetColor(TX_BLACK);
+     23:       txSelectFont("Times New Roman", 28);
+=>   24:       txDrawText(btn.x,btn.y,btn.x+110,btn.y+40, btn.text);
+     25: }
+     26: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\codeblocks\codeblocks\mingw\include\txlib.h
+Compiled:	Sep 30 2022 19:07:09, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Sep 30 2022 19:07:24
+
+Run file:	D:\Буренин Кирилл\редактор\main.exe
+Directory:	D:\Буренин Кирилл\редактор
+
+--------------------------------------------------
