@@ -5,6 +5,7 @@ struct Button
    int x;
    int y;
    const char* text;
+   string category;
 };
 
 //функция кнопки
@@ -39,12 +40,17 @@ struct Pictures
   int h;
   int w_scr;
   int h_scr;
+  bool visible;
+  string category;
 
 };
 
 void drawPicture(Pictures pct)
 {
-   Win32::TransparentBlt(txDC(), pct.x, pct.y, pct.w_scr, pct.h_scr, pct.image, 0, 0, pct.w, pct.h, TX_WHITE);
+   if(pct.visible)
+   {
+        Win32::TransparentBlt(txDC(), pct.x, pct.y, pct.w_scr, pct.h_scr, pct.image, 0, 0, pct.w, pct.h, TX_WHITE);
+   }
 }
 
 
@@ -54,30 +60,32 @@ int main()
     txDisableAutoPause();
     txTextCursor (false);
 
+    int COUNT_BTN = 4;
+    int COUNT_MENU_PICTURES = 12;
+
      //Массив кнопок
       Button btn[10];
-      btn[0]={100, 30, "Корпус"};//кнопка корпус
-      btn[1]={270, 30, "Колёса"};//кнопка колёса
-      btn[2]={440, 30, "Cтёкла"};//кнопка стёкла
-      btn[3]={630, 30, "Наклейки"};//кнопка наклейки
+      btn[0]={100, 30, "Корпус", "Корпус"};//кнопка корпус
+      btn[1]={270, 30, "Колёса", "Колёса"};//кнопка колёса
+      btn[2]={440, 30, "Мигалка", "Мигалка"};//кнопка мигалки
+      btn[3]={630, 30, "Наклейки", "Наклейка"};//кнопка наклейки
 
-      Pictures menuPicture[12];
-      menuPicture[0] = {50,100, txLoadImage("Pictures/корпус1.bmp"), 500, 154, 200, 100};
-      menuPicture[1] = {50,200, txLoadImage("Pictures/корпус2.bmp"), 200, 180, 200, 150};
-      menuPicture[2] = {50,300, txLoadImage("Pictures/корпус3.bmp"), 230, 150, 230, 150};
+      Pictures menuPicture[COUNT_MENU_PICTURES];
+      menuPicture[0] = {50,100, txLoadImage("Pictures/корпус1.bmp"), 500, 154, 200, 80, false, "Корпус"};
+      menuPicture[1] = {50,170, txLoadImage("Pictures/корпус2.bmp"), 200, 180, 200, 180, false, "Корпус"};
+      menuPicture[2] = {50,300, txLoadImage("Pictures/корпус3.bmp"), 230, 150, 230, 150, false, "Корпус"};
 
-      menuPicture[3] = {50,100, txLoadImage("Pictures/наклейка1.bmp"),30, 39, 100, 70};
-      menuPicture[4] = {50,200, txLoadImage("Pictures/наклейка2.bmp"),40, 50, 100, 70};
-      menuPicture[5] = {50,300, txLoadImage("Pictures/наклейка3.bmp"),100, 70, 100, 70};
+      menuPicture[3] = {50,100, txLoadImage("Pictures/наклейка1.bmp"),27, 38, 100, 70, false, "Наклейка"};
+      menuPicture[4] = {50,200, txLoadImage("Pictures/наклейка2.bmp"),41, 50, 100, 70, false, "Наклейка"};
+      menuPicture[5] = {50,300, txLoadImage("Pictures/наклейка3.bmp"),100, 70, 100, 70, false, "Наклейка"};
 
-      menuPicture[6] = {50,100, txLoadImage("Pictures/колесо1.bmp"),85, 68, 100, 50};
-      menuPicture[7] = {50,200, txLoadImage("Pictures/колесо2.bmp"),150, 100, 100, 50};
-      menuPicture[8] = {50,300, txLoadImage("Pictures/колесо3.bmp"),150, 125, 100, 50};
+      menuPicture[6] = {50,100, txLoadImage("Pictures/колесо1.bmp"),85, 68, 100, 50, false, "Колёса"};
+      menuPicture[7] = {50,200, txLoadImage("Pictures/колесо2.bmp"),150, 100, 100, 50, false, "Колёса"};
+      menuPicture[8] = {50,300, txLoadImage("Pictures/колесо3.bmp"),150, 125, 100, 50, false, "Колёса"};
 
-    bool korpusvisible = false;
-    bool nakleikavisible = false;
-    bool kolesovisible = false;
-
+      menuPicture[9] = {50,100, txLoadImage("Pictures/мигалка1.bmp"),348, 348, 100, 70, false, "Мигалка"};
+      menuPicture[10] = {50,200, txLoadImage("Pictures/мигалка2.bmp"),225, 225, 100, 70, false, "Мигалка"};
+      menuPicture[11] = {50,300, txLoadImage("Pictures/мигалка3.bmp"),360, 360, 100, 70, false, "Мигалка"};
     while(!GetAsyncKeyState(VK_ESCAPE))
     {
       txBegin();
@@ -85,58 +93,43 @@ int main()
       txSetFillColor(TX_GRAY);
       txClear();
       //Рисование кнопок
-      for(int nk=0; nk<4; nk++)
+      for(int nk=0; nk<COUNT_BTN; nk++)
       {
          drawButton(btn[nk]);
       }
 
-
-
-      //Клик на кнопку корпус
-      if(click(btn[0]))
+      for(int npic=0; npic < COUNT_MENU_PICTURES; npic++)
       {
-       korpusvisible = true;
-       nakleikavisible = false;
-       kolesovisible = false;
-      }
-      if(click(btn[1]))
-      {
-       korpusvisible = false;
-       nakleikavisible = false;
-       kolesovisible = true;
-      }
-      if(click(btn[3]))
-      {
-       korpusvisible = false;
-       nakleikavisible = true;
-       kolesovisible = false;
+         drawPicture(menuPicture[npic]);
       }
 
-      if(korpusvisible)
+     //Видимость меню-картинок по категории
+      for(int nk=0; nk < COUNT_BTN; nk++)
       {
-         for(int npic=0; npic<= 2; npic++)
+        if(click(btn[nk]))
          {
-          drawPicture(menuPicture[npic]);
+            for(int npic=0; npic < COUNT_MENU_PICTURES; npic++)
+            {
+               menuPicture[npic].visible = false;
+               if(menuPicture[npic].category == btn[nk].category)
+               {
+                 menuPicture[npic].visible = true;
+               }
+            }
          }
       }
-      if(nakleikavisible)
-      {
-         for(int npic=3; npic<=5; npic++)
-         {
-          drawPicture(menuPicture[npic]);
-         }
-      }
-      if(kolesovisible)
-      {
-         for(int npic=6; npic<=8; npic++)
-         {
-          drawPicture(menuPicture[npic]);
-         }
-      }
+
+
+
 
       txSleep(50);
       txEnd();
 
+     }
+
+     for(int npic=0; npic < COUNT_MENU_PICTURES; npic++)
+     {
+        txDeleteDC(menuPicture[npic].image);
      }
 
     return 0;

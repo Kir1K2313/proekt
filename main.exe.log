@@ -278,3 +278,79 @@ Run file:	D:\Буренин Кирилл\редактор\main.exe
 Directory:	D:\Буренин Кирилл\редактор
 
 --------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\Буренин Кирилл\редактор\main.exe, файл: c:\codeblocks\codeblocks\mingw\include\txlib.h, строка: 10851, функция: bool {anonymous}::TX::_txBuffer_Delete(HDC__**),
+
+Сообщение: Параметр "*dc" неверен. Возможно, этот холст не создан, или уже уничтожен, или не загрузилась картинка.
+
+#1: TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400], Instance: 0x005072FC (32-bit), Flags: CMdRE0, Thread: 0x1068 (Main), GetLastError(): 13 (Недопустимые данные). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0041075E in D:\Буренин Кирилл\редактор\main.exe: _txBuffer_Delete() at c:/codeblocks/codeblocks/mingw/include/txlib.h (10851)
+# 1 0x00421DB7 in D:\Буренин Кирилл\редактор\main.exe: txDeleteDC() at c:/codeblocks/codeblocks/mingw/include/txlib.h (13597)
+# 2 0x00422027 in D:\Буренин Кирилл\редактор\main.exe: txDeleteDC() at c:/codeblocks/codeblocks/mingw/include/txlib.h (13619)
+
+# 3 0x0042D0CE in D:\Буренин Кирилл\редактор\main.exe: main() at D:/Буренин Кирилл/редактор/main.cpp (127):
+
+    125:      for(int npic=0; npic < COUNT_MENU_PICTURES; npic++)
+    126:      {
+=>  127:         txDeleteDC(menuPicture[npic].image);
+    128:      }
+    129: 
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in bool {anonymous}::TX::_txBuffer_Delete(HDC__**) at c:\codeblocks\codeblocks\mingw\include\txlib.h (10851):
+
+  10849: $1  if (_TX_ARGUMENT_FAILED (dc)) return false;
+  10850: $   if (                   !*dc)  return false;
+=>10851: $   if (_TX_HDC_FAILED     (*dc)) return false;
+  10852: 
+  10853: $   if (!Win32::GetObjectType (Win32::GetCurrentObject (*dc, OBJ_BITMAP))) return false;
+
+# 1 in bool {anonymous}::TX::txDeleteDC(HDC__**) at c:\codeblocks\codeblocks\mingw\include\txlib.h (13597):
+
+  13595: 
+  13596: $   HDC  dc = *pdc;
+=>13597: $   bool ok = _txBuffer_Delete (pdc);
+  13598: $   if (!ok) return false;
+  13599: 
+
+# 2 in bool {anonymous}::TX::txDeleteDC(HDC) at c:\codeblocks\codeblocks\mingw\include\txlib.h (13619):
+
+  13617: bool txDeleteDC (HDC dc)
+  13618:     {
+=>13619: $1  return txDeleteDC (&dc);
+  13620:     }
+  13621: 
+
+# 3 in int main() at D:\Буренин Кирилл\редактор\main.cpp (127):
+
+    125:      for(int npic=0; npic < COUNT_MENU_PICTURES; npic++)
+    126:      {
+=>  127:         txDeleteDC(menuPicture[npic].image);
+    128:      }
+    129: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\codeblocks\codeblocks\mingw\include\txlib.h
+Compiled:	Oct  7 2022 18:49:58, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Oct 07 2022 18:50:11
+
+Run file:	D:\Буренин Кирилл\редактор\main.exe
+Directory:	D:\Буренин Кирилл\редактор
+
+--------------------------------------------------
