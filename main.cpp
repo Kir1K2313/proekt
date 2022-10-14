@@ -61,7 +61,7 @@ int main()
     txTextCursor (false);
 
     int COUNT_BTN = 4;
-    int COUNT_MENU_PICTURES = 12;
+    int COUNT_PICTURES = 12;
 
      //Массив кнопок
       Button btn[10];
@@ -70,10 +70,10 @@ int main()
       btn[2]={440, 30, "Мигалка", "Мигалка"};//кнопка мигалки
       btn[3]={630, 30, "Наклейки", "Наклейка"};//кнопка наклейки
 
-      Pictures menuPicture[COUNT_MENU_PICTURES];
-      menuPicture[0] = {50,100, txLoadImage("Pictures/корпус1.bmp"), 500, 154, 200, 80, false, "Корпус"};
-      menuPicture[1] = {50,170, txLoadImage("Pictures/корпус2.bmp"), 200, 180, 200, 180, false, "Корпус"};
-      menuPicture[2] = {50,300, txLoadImage("Pictures/корпус3.bmp"), 230, 150, 230, 150, false, "Корпус"};
+      Pictures menuPicture[COUNT_PICTURES];
+      menuPicture[0] = {50,100, txLoadImage("Pictures/корпус1.bmp"), 517, 408, 100, 80, false, "Корпус"};
+      menuPicture[1] = {50,200, txLoadImage("Pictures/корпус2.bmp"), 559, 497, 100, 180, false, "Корпус"};
+      menuPicture[2] = {50,300, txLoadImage("Pictures/корпус3.bmp"), 509, 394, 130, 150, false, "Корпус"};
 
       menuPicture[3] = {50,100, txLoadImage("Pictures/наклейка1.bmp"),27, 38, 100, 70, false, "Наклейка"};
       menuPicture[4] = {50,200, txLoadImage("Pictures/наклейка2.bmp"),41, 50, 100, 70, false, "Наклейка"};
@@ -86,6 +86,25 @@ int main()
       menuPicture[9] = {50,100, txLoadImage("Pictures/мигалка1.bmp"),348, 348, 100, 70, false, "Мигалка"};
       menuPicture[10] = {50,200, txLoadImage("Pictures/мигалка2.bmp"),225, 225, 100, 70, false, "Мигалка"};
       menuPicture[11] = {50,300, txLoadImage("Pictures/мигалка3.bmp"),360, 360, 100, 70, false, "Мигалка"};
+
+      Pictures centralPicture[COUNT_PICTURES];
+      menuPicture[0] = {250,200, txLoadImage("Pictures/корпус1.bmp"), 517, 408, 200, 80, false, "Корпус"};
+      menuPicture[1] = {250,200, txLoadImage("Pictures/корпус2.bmp"), 559, 497, 200, 180, false, "Корпус"};
+      menuPicture[2] = {250,200, txLoadImage("Pictures/корпус3.bmp"), 509, 394, 230, 150, false, "Корпус"};
+
+      menuPicture[3] = {250,200, txLoadImage("Pictures/наклейка1.bmp"),27, 38, 100, 70, false, "Наклейка"};
+      menuPicture[4] = {250,200, txLoadImage("Pictures/наклейка2.bmp"),41, 50, 100, 70, false, "Наклейка"};
+      menuPicture[5] = {250,200, txLoadImage("Pictures/наклейка3.bmp"),100, 70, 100, 70, false, "Наклейка"};
+
+      menuPicture[6] = {250,200, txLoadImage("Pictures/колесо1.bmp"),85, 68, 100, 50, false, "Колёса"};
+      menuPicture[7] = {250,200, txLoadImage("Pictures/колесо2.bmp"),150, 100, 100, 50, false, "Колёса"};
+      menuPicture[8] = {250,200, txLoadImage("Pictures/колесо3.bmp"),150, 125, 100, 50, false, "Колёса"};
+
+      menuPicture[9] = {250,200, txLoadImage("Pictures/мигалка1.bmp"),348, 348, 100, 70, false, "Мигалка"};
+      menuPicture[10] = {250,200, txLoadImage("Pictures/мигалка2.bmp"),225, 225, 100, 70, false, "Мигалка"};
+      menuPicture[11] = {250,200, txLoadImage("Pictures/мигалка3.bmp"),360, 360, 100, 70, false, "Мигалка"};
+
+
     while(!GetAsyncKeyState(VK_ESCAPE))
     {
       txBegin();
@@ -98,17 +117,43 @@ int main()
          drawButton(btn[nk]);
       }
 
-      for(int npic=0; npic < COUNT_MENU_PICTURES; npic++)
+      for(int npic=0; npic < COUNT_PICTURES; npic++)
       {
          drawPicture(menuPicture[npic]);
       }
+      for(int npic=0; npic < COUNT_PICTURES; npic++)
+      {
+         drawPicture(centralPicture[npic]);
+      }
+
+      for(int npic=0; npic < COUNT_PICTURES; npic++)
+       {
+        if(txMouseButtons() == 1 &&
+        txMouseX() >= menuPicture[npic].x &&
+        txMouseX() <= menuPicture[npic].x + menuPicture[npic].w_scr &&
+        txMouseY() >= menuPicture[npic].y &&
+        txMouseY() <= menuPicture[npic].y + menuPicture[npic].h_scr)
+        {
+
+             for(int npic1=0; npic1 < COUNT_PICTURES; npic1++)
+             {
+               if(centralPicture[npic1].category ==  centralPicture[npic].category)
+               {
+                centralPicture[npic1].visible = false;
+               }
+             }
+                centralPicture[npic].visible =  !centralPicture[npic].visible;
+                txSleep(100);
+        }
+
+    }
 
      //Видимость меню-картинок по категории
       for(int nk=0; nk < COUNT_BTN; nk++)
       {
         if(click(btn[nk]))
          {
-            for(int npic=0; npic < COUNT_MENU_PICTURES; npic++)
+            for(int npic=0; npic < COUNT_PICTURES; npic++)
             {
                menuPicture[npic].visible = false;
                if(menuPicture[npic].category == btn[nk].category)
@@ -127,9 +172,14 @@ int main()
 
      }
 
-     for(int npic=0; npic < COUNT_MENU_PICTURES; npic++)
+     for(int npic=0; npic < COUNT_PICTURES; npic++)
      {
         txDeleteDC(menuPicture[npic].image);
+     }
+
+     for(int npic=0; npic < COUNT_PICTURES; npic++)
+     {
+        txDeleteDC(centralPicture[npic].image);
      }
 
     return 0;
