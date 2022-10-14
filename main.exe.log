@@ -354,3 +354,411 @@ Run file:	D:\Буренин Кирилл\редактор\main.exe
 Directory:	D:\Буренин Кирилл\редактор
 
 --------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: D:\Буренин Кирилл\редактор\main.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x00453183 в функции size() в файле c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h на строке 45. Попытка прочесть данные по адресу 0x0000008E в модуле D:\Буренин Кирилл\редактор\main.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400], Instance: 0x005082FC (32-bit), Flags: CMdRE0, Thread: 0x470 (Main), GetLastError(): 87 (Параметр задан неверно). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00453183 in D:\Буренин Кирилл\редактор\main.exe: size() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 1 0x004B4000 in D:\Буренин Кирилл\редактор\main.exe: operator==<char>() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/new (57):
+
+     55:   {
+     56:   public:
+=>   57:     bad_alloc() throw() { }
+     58: 
+     59:     // This declaration is not useless:
+
+# 2 0x0042E112 in D:\Буренин Кирилл\редактор\main.exe: main() at D:/Буренин Кирилл/редактор/main.cpp (139):
+
+    137:              for(int npic1=0; npic < COUNT_PICTURES; npic1++)
+    138:              {
+=>  139:                if(centralPicture[npic1].category ==  centralPicture[npic].category)
+    140:                {
+    141:                    centralPicture[npic1].visible = false;
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in int main() at D:\Буренин Кирилл\редактор\main.cpp (134):
+
+    132:         txMouseX() <= menuPicture[npic].x + menuPicture[npic].w_scr &&
+    133:         txMouseY() >= menuPicture[npic].y &&
+=>  134:         txMouseY() <= menuPicture[npic].y + menuPicture[npic].h_scr)
+    135:         {
+    136: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\codeblocks\codeblocks\mingw\include\txlib.h
+Compiled:	Oct 14 2022 18:37:41, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Oct 14 2022 18:37:54
+
+Run file:	D:\Буренин Кирилл\редактор\main.exe
+Directory:	D:\Буренин Кирилл\редактор
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\Буренин Кирилл\редактор\main.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x00453183 в функции size() в файле c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h на строке 45. Попытка прочесть данные по адресу 0x0000008E в модуле D:\Буренин Кирилл\редактор\main.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400], Instance: 0x005082FC (32-bit), Flags: CMdRE0, Thread: 0x470 (Main), GetLastError(): 87 (Параметр задан неверно). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00453183 in D:\Буренин Кирилл\редактор\main.exe: size() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 1 0x004B4000 in D:\Буренин Кирилл\редактор\main.exe: operator==<char>() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/new (57):
+
+     55:   {
+     56:   public:
+=>   57:     bad_alloc() throw() { }
+     58: 
+     59:     // This declaration is not useless:
+
+# 2 0x0042E112 in D:\Буренин Кирилл\редактор\main.exe: main() at D:/Буренин Кирилл/редактор/main.cpp (139):
+
+    137:              for(int npic1=0; npic < COUNT_PICTURES; npic1++)
+    138:              {
+=>  139:                if(centralPicture[npic1].category ==  centralPicture[npic].category)
+    140:                {
+    141:                    centralPicture[npic1].visible = false;
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in int main() at D:\Буренин Кирилл\редактор\main.cpp (134):
+
+    132:         txMouseX() <= menuPicture[npic].x + menuPicture[npic].w_scr &&
+    133:         txMouseY() >= menuPicture[npic].y &&
+=>  134:         txMouseY() <= menuPicture[npic].y + menuPicture[npic].h_scr)
+    135:         {
+    136: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\codeblocks\codeblocks\mingw\include\txlib.h
+Compiled:	Oct 14 2022 18:37:41, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Oct 14 2022 18:37:55
+
+Run file:	D:\Буренин Кирилл\редактор\main.exe
+Directory:	D:\Буренин Кирилл\редактор
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: D:\Буренин Кирилл\редактор\main.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x00453183 в функции size() в файле c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h на строке 45. Попытка прочесть данные по адресу 0x0000008E в модуле D:\Буренин Кирилл\редактор\main.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400], Instance: 0x005082FC (32-bit), Flags: CMdRE0, Thread: 0x1E1C (Main), GetLastError(): 87 (Параметр задан неверно). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00453183 in D:\Буренин Кирилл\редактор\main.exe: size() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 1 0x004B4000 in D:\Буренин Кирилл\редактор\main.exe: operator==<char>() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/new (57):
+
+     55:   {
+     56:   public:
+=>   57:     bad_alloc() throw() { }
+     58: 
+     59:     // This declaration is not useless:
+
+# 2 0x0042E112 in D:\Буренин Кирилл\редактор\main.exe: main() at D:/Буренин Кирилл/редактор/main.cpp (139):
+
+    137:              for(int npic1=0; npic < COUNT_PICTURES; npic1++)
+    138:              {
+=>  139:                if(centralPicture[npic1].category ==  centralPicture[npic].category)
+    140:                {
+    141:                    centralPicture[npic1].visible = false;
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in int main() at D:\Буренин Кирилл\редактор\main.cpp (134):
+
+    132:         txMouseX() <= menuPicture[npic].x + menuPicture[npic].w_scr &&
+    133:         txMouseY() >= menuPicture[npic].y &&
+=>  134:         txMouseY() <= menuPicture[npic].y + menuPicture[npic].h_scr)
+    135:         {
+    136: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\codeblocks\codeblocks\mingw\include\txlib.h
+Compiled:	Oct 14 2022 18:42:52, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Oct 14 2022 18:43:05
+
+Run file:	D:\Буренин Кирилл\редактор\main.exe
+Directory:	D:\Буренин Кирилл\редактор
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\Буренин Кирилл\редактор\main.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x00453183 в функции size() в файле c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h на строке 45. Попытка прочесть данные по адресу 0x0000008E в модуле D:\Буренин Кирилл\редактор\main.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400], Instance: 0x005082FC (32-bit), Flags: CMdRE0, Thread: 0x1E1C (Main), GetLastError(): 87 (Параметр задан неверно). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00453183 in D:\Буренин Кирилл\редактор\main.exe: size() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 1 0x004B4000 in D:\Буренин Кирилл\редактор\main.exe: operator==<char>() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/new (57):
+
+     55:   {
+     56:   public:
+=>   57:     bad_alloc() throw() { }
+     58: 
+     59:     // This declaration is not useless:
+
+# 2 0x0042E112 in D:\Буренин Кирилл\редактор\main.exe: main() at D:/Буренин Кирилл/редактор/main.cpp (139):
+
+    137:              for(int npic1=0; npic < COUNT_PICTURES; npic1++)
+    138:              {
+=>  139:                if(centralPicture[npic1].category ==  centralPicture[npic].category)
+    140:                {
+    141:                    centralPicture[npic1].visible = false;
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in int main() at D:\Буренин Кирилл\редактор\main.cpp (134):
+
+    132:         txMouseX() <= menuPicture[npic].x + menuPicture[npic].w_scr &&
+    133:         txMouseY() >= menuPicture[npic].y &&
+=>  134:         txMouseY() <= menuPicture[npic].y + menuPicture[npic].h_scr)
+    135:         {
+    136: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\codeblocks\codeblocks\mingw\include\txlib.h
+Compiled:	Oct 14 2022 18:42:52, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Oct 14 2022 18:43:05
+
+Run file:	D:\Буренин Кирилл\редактор\main.exe
+Directory:	D:\Буренин Кирилл\редактор
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: D:\Буренин Кирилл\редактор\main.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x00453183 в функции size() в файле c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h на строке 45. Попытка прочесть данные по адресу 0x0000008E в модуле D:\Буренин Кирилл\редактор\main.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400], Instance: 0x005082FC (32-bit), Flags: CMdRE0, Thread: 0x2D0 (Main), GetLastError(): 87 (Параметр задан неверно). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00453183 in D:\Буренин Кирилл\редактор\main.exe: size() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 1 0x004B4000 in D:\Буренин Кирилл\редактор\main.exe: operator==<char>() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/new (57):
+
+     55:   {
+     56:   public:
+=>   57:     bad_alloc() throw() { }
+     58: 
+     59:     // This declaration is not useless:
+
+# 2 0x0042E112 in D:\Буренин Кирилл\редактор\main.exe: main() at D:/Буренин Кирилл/редактор/main.cpp (139):
+
+    137:              for(int npic1=0; npic < COUNT_PICTURES; npic1++)
+    138:              {
+=>  139:                if(centralPicture[npic1].category ==  centralPicture[npic].category)
+    140:                {
+    141:                    centralPicture[npic1].visible = false;
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in int main() at D:\Буренин Кирилл\редактор\main.cpp (134):
+
+    132:         txMouseX() <= menuPicture[npic].x + menuPicture[npic].w_scr &&
+    133:         txMouseY() >= menuPicture[npic].y &&
+=>  134:         txMouseY() <= menuPicture[npic].y + menuPicture[npic].h_scr)
+    135:         {
+    136: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\codeblocks\codeblocks\mingw\include\txlib.h
+Compiled:	Oct 14 2022 18:50:49, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Oct 14 2022 18:51:03
+
+Run file:	D:\Буренин Кирилл\редактор\main.exe
+Directory:	D:\Буренин Кирилл\редактор
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\Буренин Кирилл\редактор\main.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x00453183 в функции size() в файле c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h на строке 45. Попытка прочесть данные по адресу 0x0000008E в модуле D:\Буренин Кирилл\редактор\main.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400], Instance: 0x005082FC (32-bit), Flags: CMdRE0, Thread: 0x2D0 (Main), GetLastError(): 87 (Параметр задан неверно). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x00453183 in D:\Буренин Кирилл\редактор\main.exe: size() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 1 0x004B4000 in D:\Буренин Кирилл\редактор\main.exe: operator==<char>() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/new (57):
+
+     55:   {
+     56:   public:
+=>   57:     bad_alloc() throw() { }
+     58: 
+     59:     // This declaration is not useless:
+
+# 2 0x0042E112 in D:\Буренин Кирилл\редактор\main.exe: main() at D:/Буренин Кирилл/редактор/main.cpp (139):
+
+    137:              for(int npic1=0; npic < COUNT_PICTURES; npic1++)
+    138:              {
+=>  139:                if(centralPicture[npic1].category ==  centralPicture[npic].category)
+    140:                {
+    141:                    centralPicture[npic1].visible = false;
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in int main() at D:\Буренин Кирилл\редактор\main.cpp (134):
+
+    132:         txMouseX() <= menuPicture[npic].x + menuPicture[npic].w_scr &&
+    133:         txMouseY() >= menuPicture[npic].y &&
+=>  134:         txMouseY() <= menuPicture[npic].y + menuPicture[npic].h_scr)
+    135:         {
+    136: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\codeblocks\codeblocks\mingw\include\txlib.h
+Compiled:	Oct 14 2022 18:50:49, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Oct 14 2022 18:51:03
+
+Run file:	D:\Буренин Кирилл\редактор\main.exe
+Directory:	D:\Буренин Кирилл\редактор
+
+--------------------------------------------------
