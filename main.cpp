@@ -60,15 +60,16 @@ int main()
     txDisableAutoPause();
     txTextCursor (false);
 
-    int COUNT_BTN = 4;
-    int COUNT_PICTURES = 12;
+    int COUNT_BTN = 5;
+    int COUNT_PICTURES = 15;
 
      //Массив кнопок
       Button btn[COUNT_BTN];
-      btn[0]={100, 30, "Корпус", "Корпус"};//кнопка корпус
-      btn[1]={270, 30, "Колёса", "Колёса"};//кнопка колёса
-      btn[2]={440, 30, "Мигалка", "Мигалка"};//кнопка мигалки
-      btn[3]={630, 30, "Наклейки", "Наклейка"};//кнопка наклейки
+      btn[0]={60, 30, "Корпус", "Корпус"};//кнопка корпус
+      btn[1]={230, 30, "Колёса", "Колёса"};//кнопка колёса
+      btn[2]={400, 30, "Мигалка", "Мигалка"};//кнопка мигалки
+      btn[3]={570, 30, "Наклейки", "Наклейка"};//кнопка наклейки
+      btn[4]={740, 30, "Спойлер", "Спойлер"};
 
       Pictures menuPicture[COUNT_PICTURES];
       menuPicture[0] = {50,100, txLoadImage("Pictures/корпус1.bmp"), 500, 154, 200, 80, false, "Корпус"};
@@ -79,31 +80,38 @@ int main()
       menuPicture[4] = {50,200, txLoadImage("Pictures/наклейка2.bmp"),41, 50, 100, 70, false, "Наклейка"};
       menuPicture[5] = {50,300, txLoadImage("Pictures/наклейка3.bmp"),100, 70, 100, 70, false, "Наклейка"};
 
-      menuPicture[6] = {50,100, txLoadImage("Pictures/колесо1.bmp"),85, 68, 100, 50, false, "Колёса"};
-      menuPicture[7] = {50,200, txLoadImage("Pictures/колесо2.bmp"),150, 100, 100, 50, false, "Колёса"};
-      menuPicture[8] = {50,300, txLoadImage("Pictures/колесо3.bmp"),150, 125, 100, 50, false, "Колёса"};
+      menuPicture[6] = {50,100, txLoadImage("Pictures/колесо1.bmp"),85, 68, 100, 80, false, "Колёса"};
+      menuPicture[7] = {50,200, txLoadImage("Pictures/колесо2.bmp"),150, 100, 100, 80, false, "Колёса"};
+      menuPicture[8] = {50,300, txLoadImage("Pictures/колесо3.bmp"),165, 170, 100, 80, false, "Колёса"};
 
       menuPicture[9] = {50,100, txLoadImage("Pictures/мигалка1.bmp"),348, 348, 100, 70, false, "Мигалка"};
       menuPicture[10] = {50,200, txLoadImage("Pictures/мигалка2.bmp"),225, 225, 100, 70, false, "Мигалка"};
       menuPicture[11] = {50,300, txLoadImage("Pictures/мигалка3.bmp"),360, 360, 100, 70, false, "Мигалка"};
 
+      menuPicture[12] = {50,100, txLoadImage("Pictures/спойлер1.bmp"),100, 110, 100, 70, false, "Спойлер"};
+      menuPicture[13] = {50,200, txLoadImage("Pictures/спойлер2.bmp"),193,  87, 100, 70, false, "Спойлер"};
+      menuPicture[14] = {50,300, txLoadImage("Pictures/спойлер3.bmp"),273, 107, 100, 70, false, "Спойлер"};
+
       Pictures centralPicture[COUNT_PICTURES];
-      centralPicture[0] = {250,200, txLoadImage("Pictures/корпус1.bmp"), 500, 154, 200, 80, false, "Корпус"};
-      centralPicture[1] = {250,200, txLoadImage("Pictures/корпус2.bmp"), 200, 180, 200, 180, false, "Корпус"};
-      centralPicture[2] = {250,200, txLoadImage("Pictures/корпус3.bmp"), 230, 150, 230, 150, false, "Корпус"};
+      centralPicture[0] = {350,200, txLoadImage("Pictures/корпус1.bmp"), 500, 154, 370, 150, false, "Корпус"};
+      centralPicture[1] = {350,200, txLoadImage("Pictures/корпус2.bmp"), 200, 180, 300, 180, false, "Корпус"};
+      centralPicture[2] = {350,200, txLoadImage("Pictures/корпус3.bmp"), 230, 150, 300, 180, false, "Корпус"};
 
       centralPicture[3] = {250,200, txLoadImage("Pictures/наклейка1.bmp"),27, 38, 27, 38, false, "Наклейка"};
       centralPicture[4] = {250,200, txLoadImage("Pictures/наклейка2.bmp"),41, 50, 100, 70, false, "Наклейка"};
       centralPicture[5] = {250,200, txLoadImage("Pictures/наклейка3.bmp"),100, 70, 100, 70, false, "Наклейка"};
 
-      centralPicture[6] = {250,200, txLoadImage("Pictures/колесо1.bmp"),85, 68, 100, 50, false, "Колёса"};
-      centralPicture[7] = {250,200, txLoadImage("Pictures/колесо2.bmp"),150, 100, 100, 50, false, "Колёса"};
-      centralPicture[8] = {250,200, txLoadImage("Pictures/колесо3.bmp"),150, 125, 100, 50, false, "Колёса"};
+      centralPicture[6] = {250,200, txLoadImage("Pictures/колесо1.bmp"),85, 68, 100, 80, false, "Колёса"};
+      centralPicture[7] = {250,200, txLoadImage("Pictures/колесо2.bmp"),150, 100, 100, 80, false, "Колёса"};
+      centralPicture[8] = {250,200, txLoadImage("Pictures/колесо3.bmp"),165, 170, 100, 80, false, "Колёса"};
 
       centralPicture[9] = {250,200, txLoadImage("Pictures/мигалка1.bmp"),348, 348, 100, 70, false, "Мигалка"};
       centralPicture[10] = {250,200, txLoadImage("Pictures/мигалка2.bmp"),225, 225, 100, 70, false, "Мигалка"};
       centralPicture[11] = {250,200, txLoadImage("Pictures/мигалка3.bmp"),360, 360, 100, 70, false, "Мигалка"};
 
+      centralPicture[12] = {250,200, txLoadImage("Pictures/спойлер1.bmp"),100, 110, 100, 70, false, "Спойлер"};
+      centralPicture[13] = {250,200, txLoadImage("Pictures/спойлер2.bmp"),193, 87, 100, 70, false, "Спойлер"};
+      centralPicture[14] = {250,200, txLoadImage("Pictures/спойлер3.bmp"),273, 107, 100, 70, false, "Спойлер"};
     while(!GetAsyncKeyState(VK_ESCAPE))
     {
       txBegin();
@@ -125,27 +133,27 @@ int main()
          drawPicture(centralPicture[npic]);
       }
      //Видимость картинок в центре по категории меню-картинок
-      for(int npic=0; npic < COUNT_PICTURES; npic++)
-       {
-        if(txMouseButtons() == 1 &&
-        txMouseX() >= menuPicture[npic].x &&
-        txMouseX() <= menuPicture[npic].x + menuPicture[npic].w_scr &&
-        txMouseY() >= menuPicture[npic].y &&
-        txMouseY() <= menuPicture[npic].y + menuPicture[npic].h_scr)
+        for(int npic=0; npic < COUNT_PICTURES; npic++)
         {
-
-             for(int n1=0; n1 < COUNT_PICTURES; n1++)
-             {
-               if(centralPicture[n1].category ==  centralPicture[npic].category)
-               {
-                   centralPicture[n1].visible = false;
-               }
-             }
+            if(txMouseButtons() == 1 &&
+            menuPicture[npic].visible &&
+            txMouseX() >= menuPicture[npic].x &&
+            txMouseX() <= menuPicture[npic].x + menuPicture[npic].w_scr &&
+            txMouseY() >= menuPicture[npic].y &&
+            txMouseY() <= menuPicture[npic].y + menuPicture[npic].h_scr)
+            {
+                for(int n1=0; n1 < COUNT_PICTURES; n1++)
+                {
+                    if(centralPicture[n1].category ==  centralPicture[npic].category)
+                    {
+                        centralPicture[n1].visible = false;
+                    }
+                }
                 centralPicture[npic].visible = !centralPicture[npic].visible;
                 txSleep(100);
-        }
+            }
 
-       }
+        }
 
      //Видимость меню-картинок по категории кнопки
       for(int nk=0; nk < COUNT_BTN; nk++)
