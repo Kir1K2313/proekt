@@ -62,6 +62,8 @@ int main()
 
     int COUNT_BTN = 5;
     int COUNT_PICTURES = 15;
+    int select = -1;
+    bool mouse_free = false;
 
      //Массив кнопок
       Button btn[COUNT_BTN];
@@ -94,8 +96,8 @@ int main()
 
       Pictures centralPicture[COUNT_PICTURES];
       centralPicture[0] = {350,200, txLoadImage("Pictures/корпус1.bmp"), 500, 154, 370, 150, false, "Корпус"};
-      centralPicture[1] = {350,200, txLoadImage("Pictures/корпус2.bmp"), 200, 180, 300, 180, false, "Корпус"};
-      centralPicture[2] = {350,200, txLoadImage("Pictures/корпус3.bmp"), 230, 150, 300, 180, false, "Корпус"};
+      centralPicture[1] = {350,200, txLoadImage("Pictures/корпус2.bmp"), 200, 180, 300, 230, false, "Корпус"};
+      centralPicture[2] = {350,200, txLoadImage("Pictures/корпус3.bmp"), 230, 150, 350, 230, false, "Корпус"};
 
       centralPicture[3] = {250,200, txLoadImage("Pictures/наклейка1.bmp"),27, 38, 27, 38, false, "Наклейка"};
       centralPicture[4] = {250,200, txLoadImage("Pictures/наклейка2.bmp"),41, 50, 100, 70, false, "Наклейка"};
@@ -172,6 +174,60 @@ int main()
       }
 
 
+
+      //выбор центральной кнопки
+
+        for(int npic=0; npic < COUNT_PICTURES; npic++)
+        {
+         if(txMouseButtons() == 1 &&
+            centralPicture[npic].visible &&
+            txMouseX() >= centralPicture[npic].x &&
+            txMouseX() <= centralPicture[npic].x + centralPicture[npic].w &&
+            txMouseY() >= centralPicture[npic].y &&
+            txMouseY() <= centralPicture[npic].y + centralPicture[npic].h)
+            {
+             select = npic;
+             mouse_free = false;
+            }
+        }
+
+      //Передвижение выбранной центральной картинки клавишам
+      if(select >= 0)
+      {
+         if(GetAsyncKeyState(VK_RIGHT)) centralPicture[select].x += 3;
+         if(GetAsyncKeyState(VK_LEFT))  centralPicture[select].x -= 3;
+         if(GetAsyncKeyState(VK_UP))    centralPicture[select].y -= 3;
+         if(GetAsyncKeyState(VK_DOWN))  centralPicture[select].y += 3;
+
+         if(GetAsyncKeyState(VK_OEM_PLUS))
+         {
+            centralPicture[select].w_scr = centralPicture[select].w_scr * 1.02;
+            centralPicture[select].h_scr = centralPicture[select].h_scr * 1.02;
+         }
+
+         if(GetAsyncKeyState(VK_OEM_MINUS))
+         {
+            centralPicture[select].w_scr = centralPicture[select].w_scr * 0.98;
+            centralPicture[select].h_scr = centralPicture[select].h_scr * 0.98;
+         }
+      }
+
+      //Передвижение выбранной центральной картинки клавишам
+      if(select >= 0)
+      {
+          if(txMouseButtons() == 1 && !mouse_free)
+          {
+            centralPicture[select].x  = txMouseX() - centralPicture[select].w/2;
+            centralPicture[select].y  = txMouseY() - centralPicture[select].h/2;
+          }
+          else
+          {
+                if(txMouseButtons() != 1)
+                {
+                  mouse_free = true;
+                }
+          }
+      }
 
 
       txSleep(50);
