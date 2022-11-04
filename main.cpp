@@ -61,10 +61,12 @@ int main()
     txTextCursor (false);
 
     int COUNT_BTN = 5;
-    int COUNT_PICTURES = 15;
+    int COUNT_PICTURES = 17;
     int select = -1;
     bool mouse_free = false;
     int nCentralPictures = 0;
+
+    char str[100];
 
 
      //Массив кнопок
@@ -83,18 +85,20 @@ int main()
       menuPicture[3] = {50,100, txLoadImage("Pictures/наклейка1.bmp"),27, 38, 100, 70, false, "Наклейка"};
       menuPicture[4] = {50,200, txLoadImage("Pictures/наклейка2.bmp"),41, 50, 100, 70, false, "Наклейка"};
       menuPicture[5] = {50,300, txLoadImage("Pictures/наклейка3.bmp"),100, 70, 100, 70, false, "Наклейка"};
+      menuPicture[6] = {50,400, txLoadImage("Pictures/наклейка4.bmp"),106, 100, 100, 70, false, "Наклейка"};
+      menuPicture[7] = {50,500, txLoadImage("Pictures/наклейка5.bmp"),260, 260, 100, 70, false, "Наклейка"};
 
-      menuPicture[6] = {50,100, txLoadImage("Pictures/колесо1.bmp"),85, 68, 100, 80, false, "Колёса"};
-      menuPicture[7] = {50,200, txLoadImage("Pictures/колесо2.bmp"),150, 100, 100, 80, false, "Колёса"};
-      menuPicture[8] = {50,300, txLoadImage("Pictures/колесо3.bmp"),165, 170, 100, 80, false, "Колёса"};
+      menuPicture[8] = {50,100, txLoadImage("Pictures/колесо1.bmp"),85, 68, 100, 80, false, "Колёса"};
+      menuPicture[9] = {50,200, txLoadImage("Pictures/колесо2.bmp"),150, 100, 100, 80, false, "Колёса"};
+      menuPicture[10] = {50,300, txLoadImage("Pictures/колесо3.bmp"),165, 170, 100, 80, false, "Колёса"};
 
-      menuPicture[9] = {50,100, txLoadImage("Pictures/мигалка1.bmp"),348, 348, 100, 70, false, "Мигалка"};
-      menuPicture[10] = {50,200, txLoadImage("Pictures/мигалка2.bmp"),225, 225, 100, 70, false, "Мигалка"};
-      menuPicture[11] = {50,300, txLoadImage("Pictures/мигалка3.bmp"),360, 360, 100, 70, false, "Мигалка"};
+      menuPicture[11] = {50,100, txLoadImage("Pictures/мигалка1.bmp"),348, 348, 100, 70, false, "Мигалка"};
+      menuPicture[12] = {50,200, txLoadImage("Pictures/мигалка2.bmp"),225, 225, 100, 70, false, "Мигалка"};
+      menuPicture[13] = {50,300, txLoadImage("Pictures/мигалка3.bmp"),360, 360, 100, 70, false, "Мигалка"};
 
-      menuPicture[12] = {50,100, txLoadImage("Pictures/спойлер1.bmp"),100, 110, 100, 70, false, "Спойлер"};
-      menuPicture[13] = {50,200, txLoadImage("Pictures/спойлер2.bmp"),193,  87, 100, 70, false, "Спойлер"};
-      menuPicture[14] = {50,300, txLoadImage("Pictures/спойлер3.bmp"),273, 107, 100, 70, false, "Спойлер"};
+      menuPicture[14] = {50,100, txLoadImage("Pictures/спойлер1.bmp"),100, 110, 100, 70, false, "Спойлер"};
+      menuPicture[15] = {50,200, txLoadImage("Pictures/спойлер2.bmp"),193,  87, 100, 70, false, "Спойлер"};
+      menuPicture[16] = {50,300, txLoadImage("Pictures/спойлер3.bmp"),273, 107, 100, 70, false, "Спойлер"};
       //массив картинок в центре
       Pictures centralPicture[1000];
 
@@ -114,7 +118,7 @@ int main()
       {
          drawPicture(menuPicture[npic]);
       }
-      for(int npic=0; npic < COUNT_PICTURES; npic++)
+      for(int npic=0; npic < nCentralPictures; npic++)
       {
          drawPicture(centralPicture[npic]);
       }
@@ -128,16 +132,20 @@ int main()
             txMouseY() >= menuPicture[npic].y &&
             txMouseY() <= menuPicture[npic].y + menuPicture[npic].h_scr)
             {
-              centralPicture[nCentralPictures] = {250,
-                                                  200,
-                                                  menuPicture[npic].image,
-                                                  menuPicture[npic].w,
-                                                  menuPicture[npic].h,
-                                                  menuPicture[npic].w_scr,
-                                                  menuPicture[npic].h_scr,
-                                                  menuPicture[npic].visible,
-                                                  menuPicture[npic].category};
-              nCentralPictures++;
+                while(txMouseButtons() == 1)
+                {
+                    txSleep(20);
+                }
+                  centralPicture[nCentralPictures] = {250,
+                                                      200,
+                                                      menuPicture[npic].image,
+                                                      menuPicture[npic].w,
+                                                      menuPicture[npic].h,
+                                                      menuPicture[npic].w_scr,
+                                                      menuPicture[npic].h_scr,
+                                                      menuPicture[npic].visible,
+                                                      menuPicture[npic].category};
+                  nCentralPictures++;
             }
         }
 
@@ -146,6 +154,10 @@ int main()
       {
         if(click(btn[nk]))
          {
+            while(txMouseButtons() == 1)
+            {
+                txSleep(20);
+            }
             for(int npic=0; npic < COUNT_PICTURES; npic++)
             {
                menuPicture[npic].visible = false;
@@ -166,14 +178,17 @@ int main()
          if(txMouseButtons() == 1 &&
             centralPicture[npic].visible &&
             txMouseX() >= centralPicture[npic].x &&
-            txMouseX() <= centralPicture[npic].x + centralPicture[npic].w &&
+            txMouseX() <= centralPicture[npic].x + centralPicture[npic].w_scr &&
             txMouseY() >= centralPicture[npic].y &&
-            txMouseY() <= centralPicture[npic].y + centralPicture[npic].h)
+            txMouseY() <= centralPicture[npic].y + centralPicture[npic].h_scr)
             {
-             select = npic;
-             mouse_free = false;
+                select = npic;
+                mouse_free = false;
             }
         }
+
+    sprintf(str, "vibor = %d   kol = %d", select, nCentralPictures);
+    txTextOut(0, 0, str);
 
       //Передвижение выбранной центральной картинки клавишам
       if(select >= 0)
@@ -196,13 +211,13 @@ int main()
          }
       }
 
-      //Передвижение выбранной центральной картинки клавишам
+      //Передвижение выбранной центральной картинки мышкой
       if(select >= 0)
       {
           if(txMouseButtons() == 1 && !mouse_free)
           {
-            centralPicture[select].x  = txMouseX() - centralPicture[select].w/2;
-            centralPicture[select].y  = txMouseY() - centralPicture[select].h/2;
+            centralPicture[select].x  = txMouseX() - centralPicture[select].w_scr/2;
+            centralPicture[select].y  = txMouseY() - centralPicture[select].h_scr/2;
           }
           else
           {
