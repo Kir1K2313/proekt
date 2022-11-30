@@ -2,6 +2,8 @@
 #include "TXLib.h"
 #include <iostream>
 #include <fstream>
+#include "dirent.h"
+
 struct Button
 {
    int x;
@@ -75,16 +77,38 @@ int get_h(string adress)
    return h;
 }
 
+int readFromDir(string adress,Pictures menuPicture[], int COUNT_PICTURES)
+{
+ DIR *dir;
+ struct dirent *ent;
+ lastY = 100;
+ if ((dir == opendir (adress.c_str)) != NULL)
+  {
+   while ((ent = readdir (dir))  != NULL)
+{
+    if(ent->d_name != "." && ent->d_name != "..")
+    {
+     menuPicture[COUNT_PICTURES].y = lastY;
+     menuPicture[COUNT_PICTURES].adress = adress + (string)ent->d_name;
+     COUNT_PICTURES ++;
+     lastY +=100;
+    }
+}
+   closedir (dir);
+
+  }
+  return COUNT_PICTURES;
+}
 using namespace std;
 
-int main()
+int main
 {
     txCreateWindow (1200, 800);
     txDisableAutoPause();
     txTextCursor (false);
 
     int COUNT_BTN = 5;
-    int COUNT_PICTURES = 23;
+    int COUNT_PICTURES = 0;
     int select = -1;
     bool mouse_free = false;
     int nCentralPictures = 0;
@@ -100,7 +124,13 @@ int main()
       btn[3]={570, 30, "Наклейки", "Наклейка"};//кнопка наклейки
       btn[4]={740, 30, "Спойлер", "Спойлер"};
       //массив картинок
-      Pictures menuPicture[COUNT_PICTURES];
+      Pictures menuPicture[100];
+      COUNT_PICTURES = readFromDir("Pictures/Корпус/",menuPicture,COUNT_PICTURES);
+      COUNT_PICTURES = readFromDir("Pictures/Наклейка/",menuPicture,COUNT_PICTURES);
+      COUNT_PICTURES = readFromDir("Pictures/Колёса/",menuPicture,COUNT_PICTURES);
+      COUNT_PICTURES = readFromDir("Pictures/Мигалка/",menuPicture,COUNT_PICTURES);
+      COUNT_PICTURES = readFromDir("Pictures/Спойлер/",menuPicture,COUNT_PICTURES);
+      /*
       menuPicture[0] = {NULL,100,"Pictures/Корпус/корпус1.bmp", NULL,NULL,NULL, 300, 100};
       menuPicture[1] = {NULL,170,"Pictures/Корпус/корпус2.bmp", NULL,NULL,NULL, 280, 220};
       menuPicture[2] = {NULL,300,"Pictures/Корпус/корпус3.bmp", NULL,NULL,NULL, 280, 150};
@@ -128,7 +158,7 @@ int main()
       menuPicture[20] = {NULL,100, "Pictures/Спойлер/спойлер1.bmp", NULL,100, 110, 100, 70};
       menuPicture[21] = {NULL,200, "Pictures/Спойлер/спойлер2.bmp", NULL,193,  87, 100, 70};
       menuPicture[22] = {NULL,300, "Pictures/Спойлер/спойлер3.bmp", NULL,273, 107, 100, 70};
-
+      */
       //массив картинок в центре
       Pictures centralPicture[1000];
 
@@ -145,6 +175,14 @@ int main()
         int pos1 = menuPicture[npic].adress.find("/");
         int pos2 = menuPicture[npic].adress.find("/", pos1+1);
         menuPicture[npic].category = menuPicture[npic].adress.substr(pos1+1, pos2-pos1-1);
+
+        if(menuPicture[npic].category == "Корпус" || menuPicture[npic].category == "Наклейка" ||
+           menuPicture[npic].category == "Колёса" || menuPicture[npic].category == "Мигалка" ||
+           menuPicture[npic].category == "Спойлер")
+         {
+           menuPicture[npic].w_scr = menuPicture[npic].w;
+           menuPicture[npic].h_scr = menuPicture[npic].h;
+         }
 
 
         }

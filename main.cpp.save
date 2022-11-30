@@ -1,5 +1,9 @@
 
 #include "TXLib.h"
+#include <iostream>
+#include <fstream>
+#include "dirent.h"
+
 struct Button
 {
    int x;
@@ -54,8 +58,50 @@ void drawPicture(Pictures pct)
    }
 }
 
+int get_w(string adress)
+{
+   FILE *f1 = fopen(adress.c_str(), "rb");
+   unsigned char headerinfo[54];
+   fread(headerinfo, sizeof(unsigned char),54,f1);
 
-int main()
+   int w = *(int*)&headerinfo[18];
+   return w;
+}
+int get_h(string adress)
+{
+   FILE *f1 = fopen(adress.c_str(), "rb");
+   unsigned char headerinfo[54];
+   fread(headerinfo, sizeof(unsigned char),54,f1);
+
+   int h = *(int*)&headerinfo[22];
+   return h;
+}
+
+int readFromDir(string adress,Pictures menuPicture[], int COUNT_PICTURES)
+{
+ DIR *dir;
+ struct dirent *ent;
+ lastY = 100;
+ if ((dir == opendir (adress.c_str)) != NULL)
+  {
+   while ((ent = readdir (dir))  != NULL)
+{
+    if(ent->d_name != "." && ent->d_name != "..")
+    {
+     menuPicture[COUNT_PICTURES].y = lastY;
+     menuPicture[COUNT_PICTURES].adress = adress + (string)ent->d_name;
+     COUNT_PICTURES ++;
+     lastY +=100;
+    }
+}
+   closedir (dir);
+
+  }
+  return COUNT_PICTURES;
+}
+using namespace std;
+
+int main
 {
     txCreateWindow (1200, 800);
     txDisableAutoPause();
@@ -78,44 +124,72 @@ int main()
       btn[3]={570, 30, "Наклейки", "Наклейка"};//кнопка наклейки
       btn[4]={740, 30, "Спойлер", "Спойлер"};
       //массив картинок
-      Pictures menuPicture[COUNT_PICTURES];
-      menuPicture[0] = {50,100,"Pictures/Корпус/корпус1.bmp", txLoadImage(menuPicture[0].adress), 500, 154, 300, 100, "Корпус"};
-      menuPicture[1] = {50,170, txLoadImage("Pictures/Корпус/корпус2.bmp"), 200, 180, 280, 220, "Корпус"};
-      menuPicture[2] = {50,300, txLoadImage("Pictures/Корпус/корпус3.bmp"), 230, 150, 280, 150, "Корпус"};
-      menuPicture[3] = {50,400, txLoadImage("Pictures/Корпус/корпус4.bmp"), 431, 117, 280, 80,  "Корпус"};
-      menuPicture[4] = {50,445, txLoadImage("Pictures/Корпус/корпус5.bmp"), 500, 500, 330, 230, "Корпус"};
+      Pictures menuPicture[100];
+      "Pictures/Корпус
+      COUNT_PICTURES = readFromDir("Pictures/Корпус/",menuPicture,COUNT_PICTURES);
+      COUNT_PICTURES = readFromDir("Pictures/Корпус/",menuPicture,COUNT_PICTURES);
+      COUNT_PICTURES = readFromDir("Pictures/Корпус/",menuPicture,COUNT_PICTURES);
+      COUNT_PICTURES = readFromDir("Pictures/Корпус/",menuPicture,COUNT_PICTURES);
+      COUNT_PICTURES = readFromDir("Pictures/Корпус/",menuPicture,COUNT_PICTURES);
+      /*
+      menuPicture[0] = {NULL,100,"Pictures/Корпус/корпус1.bmp", NULL,NULL,NULL, 300, 100};
+      menuPicture[1] = {NULL,170,"Pictures/Корпус/корпус2.bmp", NULL,NULL,NULL, 280, 220};
+      menuPicture[2] = {NULL,300,"Pictures/Корпус/корпус3.bmp", NULL,NULL,NULL, 280, 150};
+      menuPicture[3] = {NULL,400,"Pictures/Корпус/корпус4.bmp", NULL, 431, 117, 280, 80};
+      menuPicture[4] = {NULL,445,"Pictures/Корпус/корпус5.bmp", NULL, 500, 500, 330, 230};
 
-      menuPicture[5] = {50,100, txLoadImage("Pictures/Наклейка/наклейка1.bmp"),27, 38, 100, 70, "Наклейка"};
-      menuPicture[6] = {50,200, txLoadImage("Pictures/Наклейка/наклейка2.bmp"),41, 50, 100, 70, "Наклейка"};
-      menuPicture[7] = {50,300, txLoadImage("Pictures/Наклейка/наклейка3.bmp"),100, 70, 100, 70, "Наклейка"};
-      menuPicture[8] = {50,400, txLoadImage("Pictures/Наклейка/наклейка4.bmp"),225, 225, 100, 70, "Наклейка"};
-      menuPicture[9] = {50,500, txLoadImage("Pictures/Наклейка/наклейка5.bmp"),225, 225, 100, 70, "Наклейка";
+      menuPicture[5] = {NULL,100, "Pictures/Наклейка/наклейка1.bmp", NULL,27, 38, 100, 70};
+      menuPicture[6] = {NULL,200, "Pictures/Наклейка/наклейка2.bmp", NULL,41, 50, 100, 70};
+      menuPicture[7] = {NULL,300, "Pictures/Наклейка/наклейка3.bmp", NULL,100, 70, 100, 70};
+      menuPicture[8] = {NULL,400, "Pictures/Наклейка/наклейка4.bmp", NULL,225, 225, 100, 70};
+      menuPicture[9] = {NULL,500, "Pictures/Наклейка/наклейка5.bmp", NULL,225, 225, 100, 70};
 
-      menuPicture[10] = {50,100, txLoadImage("Pictures/Колёса/колесо1.bmp"),85, 68, 100, 80,  "Колёса"};
-      menuPicture[11] = {50,200, txLoadImage("Pictures/Колёса/колесо2.bmp"),150, 100, 100, 80, "Колёса"};
-      menuPicture[12] = {50,300, txLoadImage("Pictures/Колёса/колесо3.bmp"),165, 170, 100, 80, "Колёса"};
-      menuPicture[13] = {50,400, txLoadImage("Pictures/Колёса/колесо4.bmp"),400, 392, 100, 80, "Колёса"};
-      menuPicture[14] = {50,500, txLoadImage("Pictures/Колёса/колесо5.bmp"),260, 260, 100, 80, "Колёса"};
+      menuPicture[10] = {NULL,100, "Pictures/Колёса/колесо1.bmp", NULL,85, 68, 100, 80};
+      menuPicture[11] = {NULL,200, "Pictures/Колёса/колесо2.bmp", NULL,150, 100, 100, 80};
+      menuPicture[12] = {NULL,300, "Pictures/Колёса/колесо3.bmp", NULL,165, 170, 100, 80};
+      menuPicture[13] = {NULL,400, "Pictures/Колёса/колесо4.bmp", NULL,400, 392, 100, 80};
+      menuPicture[14] = {NULL,500, "Pictures/Колёса/колесо5.bmp", NULL,260, 260, 100, 80};
 
-      menuPicture[15] = {50,100, txLoadImage("Pictures/Мигалка/мигалка1.bmp"),348, 348, 100, 70, "Мигалка"};
-      menuPicture[16] = {50,200, txLoadImage("Pictures/Мигалка/мигалка2.bmp"),225, 225, 100, 70, "Мигалка"};
-      menuPicture[17] = {50,300, txLoadImage("Pictures/Мигалка/мигалка3.bmp"),360, 360, 100, 70, "Мигалка"};
-      menuPicture[18] = {50,400, txLoadImage("Pictures/Мигалка/мигалка4.bmp"),225, 225, 100, 70, "Мигалка"};
-      menuPicture[19] = {50,500, txLoadImage("Pictures/Мигалка/мигалка5.bmp"),800, 800, 100, 70, "Мигалка"};
+      menuPicture[15] = {NULL,100, "Pictures/Мигалка/мигалка1.bmp", NULL,348, 348, 100, 70};
+      menuPicture[16] = {NULL,200, "Pictures/Мигалка/мигалка2.bmp", NULL,225, 225, 100, 70};
+      menuPicture[17] = {NULL,300, "Pictures/Мигалка/мигалка3.bmp", NULL,360, 360, 100, 70};
+      menuPicture[18] = {NULL,400, "Pictures/Мигалка/мигалка4.bmp", NULL,225, 225, 100, 70};
+      menuPicture[19] = {NULL,500, "Pictures/Мигалка/мигалка5.bmp", NULL,800, 800, 100, 70};
 
-      menuPicture[20] = {50,100, txLoadImage("Pictures/Спойлер/спойлер1.bmp"),100, 110, 100, 70, "Спойлер"};
-      menuPicture[21] = {50,200, txLoadImage("Pictures/Спойлер/спойлер2.bmp"),193,  87, 100, 70, "Спойлер"};
-      menuPicture[22] = {50,300, txLoadImage("Pictures/Спойлер/спойлер3.bmp"),273, 107, 100, 70, "Спойлер"};
+      menuPicture[20] = {NULL,100, "Pictures/Спойлер/спойлер1.bmp", NULL,100, 110, 100, 70};
+      menuPicture[21] = {NULL,200, "Pictures/Спойлер/спойлер2.bmp", NULL,193,  87, 100, 70};
+      menuPicture[22] = {NULL,300, "Pictures/Спойлер/спойлер3.bmp", NULL,273, 107, 100, 70};
+      */
       //массив картинок в центре
       Pictures centralPicture[1000];
 
+
+
       for(int npic=0; npic < COUNT_PICTURES; npic++)
         {
-        
-        menuPicture[npic].image = txLoadImage(menuPicture[0].adress)
+        menuPicture[npic].image = txLoadImage(menuPicture[npic].adress.c_str());
+        menuPicture[npic].w = get_w(menuPicture[npic].adress);
+        menuPicture[npic].h = get_h(menuPicture[npic].adress);
+        menuPicture[npic].x = 50;
+
         menuPicture[npic].visible = false;
+        int pos1 = menuPicture[npic].adress.find("/");
+        int pos2 = menuPicture[npic].adress.find("/", pos1+1);
+        menuPicture[npic].category = menuPicture[npic].adress.substr(pos1+1, pos2-pos1-1);
         
+        if(menuPicture[npic].category == "Корпус" || menuPicture[npic].category == "Корпус" ||
+           menuPicture[npic].category == "Корпус" || menuPicture[npic].category == "Корпус" ||
+           menuPicture[npic].category == "Корпус")
+          {
+          menuPicture[npic].w_scr = 
+          }                                                                                 )
+
+
         }
+
+
+
+
     while(!GetAsyncKeyState(VK_ESCAPE))
     {
       txBegin();
@@ -152,6 +226,7 @@ int main()
                 }
                   centralPicture[nCentralPictures] = {250,
                                                       200,
+                                                      menuPicture[npic].adress,
                                                       menuPicture[npic].image,
                                                       menuPicture[npic].w,
                                                       menuPicture[npic].h,
