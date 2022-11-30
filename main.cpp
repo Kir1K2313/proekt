@@ -56,6 +56,24 @@ void drawPicture(Pictures pct)
    }
 }
 
+int get_w(string adress)
+{
+   FILE *f1 = fopen(adress.c_str(), "rb");
+   unsigned char headerinfo[54];
+   fread(headerinfo, sizeof(unsigned char),54,f1);
+
+   int w = *(int*)&headerinfo[18];
+   return w;
+}
+int get_h(string adress)
+{
+   FILE *f1 = fopen(adress.c_str(), "rb");
+   unsigned char headerinfo[54];
+   fread(headerinfo, sizeof(unsigned char),54,f1);
+
+   int h = *(int*)&headerinfo[22];
+   return h;
+}
 
 using namespace std;
 
@@ -83,33 +101,33 @@ int main()
       btn[4]={740, 30, "Спойлер", "Спойлер"};
       //массив картинок
       Pictures menuPicture[COUNT_PICTURES];
-      menuPicture[0] = {50,100,"Pictures/Корпус/корпус1.bmp", NULL, 500, 154, 300, 100, "Корпус"};
-      menuPicture[1] = {50,170,"Pictures/Корпус/корпус2.bmp", NULL, 200, 180, 280, 220, "Корпус"};
-      menuPicture[2] = {50,300,"Pictures/Корпус/корпус3.bmp", NULL, 230, 150, 280, 150, "Корпус"};
-      menuPicture[3] = {50,400,"Pictures/Корпус/корпус4.bmp", NULL, 431, 117, 280, 80,  "Корпус"};
-      menuPicture[4] = {50,445,"Pictures/Корпус/корпус5.bmp", NULL, 500, 500, 330, 230, "Корпус"};
+      menuPicture[0] = {NULL,100,"Pictures/Корпус/корпус1.bmp", NULL,NULL,NULL, 300, 100};
+      menuPicture[1] = {NULL,170,"Pictures/Корпус/корпус2.bmp", NULL,NULL,NULL, 280, 220};
+      menuPicture[2] = {NULL,300,"Pictures/Корпус/корпус3.bmp", NULL,NULL,NULL, 280, 150};
+      menuPicture[3] = {NULL,400,"Pictures/Корпус/корпус4.bmp", NULL, 431, 117, 280, 80};
+      menuPicture[4] = {NULL,445,"Pictures/Корпус/корпус5.bmp", NULL, 500, 500, 330, 230};
 
-      menuPicture[5] = {50,100, "Pictures/Наклейка/наклейка1.bmp", NULL,27, 38, 100, 70, "Наклейка"};
-      menuPicture[6] = {50,200, "Pictures/Наклейка/наклейка2.bmp", NULL,41, 50, 100, 70, "Наклейка"};
-      menuPicture[7] = {50,300, "Pictures/Наклейка/наклейка3.bmp", NULL,100, 70, 100, 70, "Наклейка"};
-      menuPicture[8] = {50,400, "Pictures/Наклейка/наклейка4.bmp", NULL,225, 225, 100, 70, "Наклейка"};
-      menuPicture[9] = {50,500, "Pictures/Наклейка/наклейка5.bmp", NULL,225, 225, 100, 70, "Наклейка"};
+      menuPicture[5] = {NULL,100, "Pictures/Наклейка/наклейка1.bmp", NULL,27, 38, 100, 70};
+      menuPicture[6] = {NULL,200, "Pictures/Наклейка/наклейка2.bmp", NULL,41, 50, 100, 70};
+      menuPicture[7] = {NULL,300, "Pictures/Наклейка/наклейка3.bmp", NULL,100, 70, 100, 70};
+      menuPicture[8] = {NULL,400, "Pictures/Наклейка/наклейка4.bmp", NULL,225, 225, 100, 70};
+      menuPicture[9] = {NULL,500, "Pictures/Наклейка/наклейка5.bmp", NULL,225, 225, 100, 70};
 
-      menuPicture[10] = {50,100, "Pictures/Колёса/колесо1.bmp", NULL,85, 68, 100, 80,  "Колёса"};
-      menuPicture[11] = {50,200, "Pictures/Колёса/колесо2.bmp", NULL,150, 100, 100, 80, "Колёса"};
-      menuPicture[12] = {50,300, "Pictures/Колёса/колесо3.bmp", NULL,165, 170, 100, 80, "Колёса"};
-      menuPicture[13] = {50,400, "Pictures/Колёса/колесо4.bmp", NULL,400, 392, 100, 80, "Колёса"};
-      menuPicture[14] = {50,500, "Pictures/Колёса/колесо5.bmp", NULL,260, 260, 100, 80, "Колёса"};
+      menuPicture[10] = {NULL,100, "Pictures/Колёса/колесо1.bmp", NULL,85, 68, 100, 80};
+      menuPicture[11] = {NULL,200, "Pictures/Колёса/колесо2.bmp", NULL,150, 100, 100, 80};
+      menuPicture[12] = {NULL,300, "Pictures/Колёса/колесо3.bmp", NULL,165, 170, 100, 80};
+      menuPicture[13] = {NULL,400, "Pictures/Колёса/колесо4.bmp", NULL,400, 392, 100, 80};
+      menuPicture[14] = {NULL,500, "Pictures/Колёса/колесо5.bmp", NULL,260, 260, 100, 80};
 
-      menuPicture[15] = {50,100, "Pictures/Мигалка/мигалка1.bmp", NULL,348, 348, 100, 70, "Мигалка"};
-      menuPicture[16] = {50,200, "Pictures/Мигалка/мигалка2.bmp", NULL,225, 225, 100, 70, "Мигалка"};
-      menuPicture[17] = {50,300, "Pictures/Мигалка/мигалка3.bmp", NULL,360, 360, 100, 70, "Мигалка"};
-      menuPicture[18] = {50,400, "Pictures/Мигалка/мигалка4.bmp", NULL,225, 225, 100, 70, "Мигалка"};
-      menuPicture[19] = {50,500, "Pictures/Мигалка/мигалка5.bmp", NULL,800, 800, 100, 70, "Мигалка"};
+      menuPicture[15] = {NULL,100, "Pictures/Мигалка/мигалка1.bmp", NULL,348, 348, 100, 70};
+      menuPicture[16] = {NULL,200, "Pictures/Мигалка/мигалка2.bmp", NULL,225, 225, 100, 70};
+      menuPicture[17] = {NULL,300, "Pictures/Мигалка/мигалка3.bmp", NULL,360, 360, 100, 70};
+      menuPicture[18] = {NULL,400, "Pictures/Мигалка/мигалка4.bmp", NULL,225, 225, 100, 70};
+      menuPicture[19] = {NULL,500, "Pictures/Мигалка/мигалка5.bmp", NULL,800, 800, 100, 70};
 
-      menuPicture[20] = {50,100, "Pictures/Спойлер/спойлер1.bmp", NULL,100, 110, 100, 70, "Спойлер"};
-      menuPicture[21] = {50,200, "Pictures/Спойлер/спойлер2.bmp", NULL,193,  87, 100, 70, "Спойлер"};
-      menuPicture[22] = {50,300, "Pictures/Спойлер/спойлер3.bmp", NULL,273, 107, 100, 70, "Спойлер"};
+      menuPicture[20] = {NULL,100, "Pictures/Спойлер/спойлер1.bmp", NULL,100, 110, 100, 70};
+      menuPicture[21] = {NULL,200, "Pictures/Спойлер/спойлер2.bmp", NULL,193,  87, 100, 70};
+      menuPicture[22] = {NULL,300, "Pictures/Спойлер/спойлер3.bmp", NULL,273, 107, 100, 70};
 
       //массив картинок в центре
       Pictures centralPicture[1000];
@@ -118,15 +136,20 @@ int main()
 
       for(int npic=0; npic < COUNT_PICTURES; npic++)
         {
-
         menuPicture[npic].image = txLoadImage(menuPicture[npic].adress.c_str());
+        menuPicture[npic].w = get_w(menuPicture[npic].adress);
+        menuPicture[npic].h = get_h(menuPicture[npic].adress);
+        menuPicture[npic].x = 50;
+
         menuPicture[npic].visible = false;
         int pos1 = menuPicture[npic].adress.find("/");
         int pos2 = menuPicture[npic].adress.find("/", pos1+1);
-        menuPicture[npic].adress = menuPicture[npic].adress.substr(pos+1, pos2-pos1-1);
+        menuPicture[npic].category = menuPicture[npic].adress.substr(pos1+1, pos2-pos1-1);
 
 
         }
+
+
 
 
     while(!GetAsyncKeyState(VK_ESCAPE))
