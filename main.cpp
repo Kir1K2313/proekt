@@ -3,6 +3,10 @@
 #include <iostream>
 #include <fstream>
 #include "dirent.h"
+#include <conio.h>
+#include <stdlib.h>
+
+using namespace std;
 
 struct Button
 {
@@ -35,6 +39,7 @@ bool click(Button btn)
         txMouseY() >= btn.y &&
         txMouseY() <= btn.y+40);
 }
+
 struct Pictures
 {
   int x;
@@ -47,7 +52,6 @@ struct Pictures
   int h_scr;
   string category;
   bool visible;
-
 };
 
 void drawPicture(Pictures pct)
@@ -67,6 +71,7 @@ int get_w(string adress)
    int w = *(int*)&headerinfo[18];
    return w;
 }
+
 int get_h(string adress)
 {
    FILE *f1 = fopen(adress.c_str(), "rb");
@@ -77,31 +82,31 @@ int get_h(string adress)
    return h;
 }
 
-int readFromDir(string adress,Pictures menuPicture[], int COUNT_PICTURES)
+int readFromDir(string adress, Pictures menuPicture[], int COUNT_PICTURES)
 {
- DIR *dir;
- struct dirent *ent;
- lastY = 100;
- if ((dir == opendir (adress.c_str)) != NULL)
-  {
-   while ((ent = readdir (dir))  != NULL)
-{
-    if(ent->d_name != "." && ent->d_name != "..")
-    {
-     menuPicture[COUNT_PICTURES].y = lastY;
-     menuPicture[COUNT_PICTURES].adress = adress + (string)ent->d_name;
-     COUNT_PICTURES ++;
-     lastY +=100;
-    }
-}
-   closedir (dir);
+     DIR *dir;
+     struct dirent *ent;
+     int lastY = 100;
+     if ((dir = opendir (adress.c_str())) != NULL)
+        {
+            while ((ent = readdir (dir))  != NULL)
+            {
+                if(ent->d_name != "." && ent->d_name != "..")
+                {
+                    menuPicture[COUNT_PICTURES].y = lastY;
+                    menuPicture[COUNT_PICTURES].adress = adress + (string)ent->d_name;
+                    COUNT_PICTURES ++;
+                    lastY += 100;
+                }
+            }
+            closedir (dir);
 
-  }
-  return COUNT_PICTURES;
+        }
+      return COUNT_PICTURES;
 }
-using namespace std;
 
-int main
+
+int main()
 {
     txCreateWindow (1200, 800);
     txDisableAutoPause();
@@ -123,72 +128,41 @@ int main
       btn[2]={400, 30, "Мигалка", "Мигалка"};//кнопка мигалки
       btn[3]={570, 30, "Наклейки", "Наклейка"};//кнопка наклейки
       btn[4]={740, 30, "Спойлер", "Спойлер"};
+
       //массив картинок
       Pictures menuPicture[100];
+
+      //массив картинок в центре
+      Pictures centralPicture[100];
+
       COUNT_PICTURES = readFromDir("Pictures/Корпус/",menuPicture,COUNT_PICTURES);
       COUNT_PICTURES = readFromDir("Pictures/Наклейка/",menuPicture,COUNT_PICTURES);
       COUNT_PICTURES = readFromDir("Pictures/Колёса/",menuPicture,COUNT_PICTURES);
       COUNT_PICTURES = readFromDir("Pictures/Мигалка/",menuPicture,COUNT_PICTURES);
       COUNT_PICTURES = readFromDir("Pictures/Спойлер/",menuPicture,COUNT_PICTURES);
-      /*
-      menuPicture[0] = {NULL,100,"Pictures/Корпус/корпус1.bmp", NULL,NULL,NULL, 300, 100};
-      menuPicture[1] = {NULL,170,"Pictures/Корпус/корпус2.bmp", NULL,NULL,NULL, 280, 220};
-      menuPicture[2] = {NULL,300,"Pictures/Корпус/корпус3.bmp", NULL,NULL,NULL, 280, 150};
-      menuPicture[3] = {NULL,400,"Pictures/Корпус/корпус4.bmp", NULL, 431, 117, 280, 80};
-      menuPicture[4] = {NULL,445,"Pictures/Корпус/корпус5.bmp", NULL, 500, 500, 330, 230};
-
-      menuPicture[5] = {NULL,100, "Pictures/Наклейка/наклейка1.bmp", NULL,27, 38, 100, 70};
-      menuPicture[6] = {NULL,200, "Pictures/Наклейка/наклейка2.bmp", NULL,41, 50, 100, 70};
-      menuPicture[7] = {NULL,300, "Pictures/Наклейка/наклейка3.bmp", NULL,100, 70, 100, 70};
-      menuPicture[8] = {NULL,400, "Pictures/Наклейка/наклейка4.bmp", NULL,225, 225, 100, 70};
-      menuPicture[9] = {NULL,500, "Pictures/Наклейка/наклейка5.bmp", NULL,225, 225, 100, 70};
-
-      menuPicture[10] = {NULL,100, "Pictures/Колёса/колесо1.bmp", NULL,85, 68, 100, 80};
-      menuPicture[11] = {NULL,200, "Pictures/Колёса/колесо2.bmp", NULL,150, 100, 100, 80};
-      menuPicture[12] = {NULL,300, "Pictures/Колёса/колесо3.bmp", NULL,165, 170, 100, 80};
-      menuPicture[13] = {NULL,400, "Pictures/Колёса/колесо4.bmp", NULL,400, 392, 100, 80};
-      menuPicture[14] = {NULL,500, "Pictures/Колёса/колесо5.bmp", NULL,260, 260, 100, 80};
-
-      menuPicture[15] = {NULL,100, "Pictures/Мигалка/мигалка1.bmp", NULL,348, 348, 100, 70};
-      menuPicture[16] = {NULL,200, "Pictures/Мигалка/мигалка2.bmp", NULL,225, 225, 100, 70};
-      menuPicture[17] = {NULL,300, "Pictures/Мигалка/мигалка3.bmp", NULL,360, 360, 100, 70};
-      menuPicture[18] = {NULL,400, "Pictures/Мигалка/мигалка4.bmp", NULL,225, 225, 100, 70};
-      menuPicture[19] = {NULL,500, "Pictures/Мигалка/мигалка5.bmp", NULL,800, 800, 100, 70};
-
-      menuPicture[20] = {NULL,100, "Pictures/Спойлер/спойлер1.bmp", NULL,100, 110, 100, 70};
-      menuPicture[21] = {NULL,200, "Pictures/Спойлер/спойлер2.bmp", NULL,193,  87, 100, 70};
-      menuPicture[22] = {NULL,300, "Pictures/Спойлер/спойлер3.bmp", NULL,273, 107, 100, 70};
-      */
-      //массив картинок в центре
-      Pictures centralPicture[1000];
 
 
 
-      for(int npic=0; npic < COUNT_PICTURES; npic++)
-        {
-        menuPicture[npic].image = txLoadImage(menuPicture[npic].adress.c_str());
-        menuPicture[npic].w = get_w(menuPicture[npic].adress);
-        menuPicture[npic].h = get_h(menuPicture[npic].adress);
+    for(int npic=0; npic < COUNT_PICTURES; npic++)
+    {
         menuPicture[npic].x = 50;
 
-        menuPicture[npic].visible = false;
+        menuPicture[npic].image = txLoadImage(menuPicture[npic].adress.c_str());
+
+        menuPicture[npic].w = get_w(menuPicture[npic].adress);
+        menuPicture[npic].h = get_h(menuPicture[npic].adress);
+
+        menuPicture[npic].w_scr = menuPicture[npic].w;
+        menuPicture[npic].h_scr = menuPicture[npic].h;
+
+
         int pos1 = menuPicture[npic].adress.find("/");
         int pos2 = menuPicture[npic].adress.find("/", pos1+1);
         menuPicture[npic].category = menuPicture[npic].adress.substr(pos1+1, pos2-pos1-1);
 
-        if(menuPicture[npic].category == "Корпус" || menuPicture[npic].category == "Наклейка" ||
-           menuPicture[npic].category == "Колёса" || menuPicture[npic].category == "Мигалка" ||
-           menuPicture[npic].category == "Спойлер")
-         {
-           menuPicture[npic].w_scr = menuPicture[npic].w;
-           menuPicture[npic].h_scr = menuPicture[npic].h;
-         }
+        menuPicture[npic].visible = true;
 
-
-        }
-
-
-
+    }
 
     while(!GetAsyncKeyState(VK_ESCAPE))
     {
@@ -206,11 +180,13 @@ int main
       {
          drawPicture(menuPicture[npic]);
       }
+
       for(int npic=0; npic < nCentralPictures; npic++)
       {
          drawPicture(centralPicture[npic]);
       }
-     //Видимость картинок в центре по категории меню-картинок
+
+        //Видимость картинок в центре по категории меню-картинок
         for(int npic=0; npic < COUNT_PICTURES; npic++)
         {
             if(txMouseButtons() == 1 &&
@@ -233,7 +209,9 @@ int main
                                                       menuPicture[npic].w_scr,
                                                       menuPicture[npic].h_scr,
                                                       menuPicture[npic].category,
-                                                      menuPicture[npic].visible};
+                                                      /*menuPicture[npic].visible*/
+                                                      true
+                                                      };
 
                   nCentralPictures++;
             }
@@ -317,6 +295,7 @@ int main
                 }
           }
       }
+
      // удаление картинок
      if(select>=0 && GetAsyncKeyState(VK_DELETE))
      {
