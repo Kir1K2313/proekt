@@ -1,10 +1,10 @@
-
 #include "TXLib.h"
 #include <iostream>
 #include <fstream>
 #include "dirent.h"
 #include <conio.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 using namespace std;
 
@@ -91,7 +91,7 @@ int readFromDir(string adress, Pictures menuPicture[], int COUNT_PICTURES)
         {
             while ((ent = readdir (dir))  != NULL)
             {
-                if(ent->d_name != "." && ent->d_name != "..")
+                if((string)ent->d_name != "." && (string)ent->d_name != "..")
                 {
                     menuPicture[COUNT_PICTURES].y = lastY;
                     menuPicture[COUNT_PICTURES].adress = adress + (string)ent->d_name;
@@ -105,6 +105,11 @@ int readFromDir(string adress, Pictures menuPicture[], int COUNT_PICTURES)
       return COUNT_PICTURES;
 }
 
+/*
+const int COUNT_BTN = 7;
+const int BTN_SAVE  = COUNT_BTN - 2;
+const int BTN_LOAD  = COUNT_BTN - 1;
+*/
 
 int main()
 {
@@ -112,7 +117,7 @@ int main()
     txDisableAutoPause();
     txTextCursor (false);
 
-    int COUNT_BTN = 5;
+    int COUNT_BTN = 7;
     int COUNT_PICTURES = 0;
     int select = -1;
     bool mouse_free = false;
@@ -128,6 +133,9 @@ int main()
       btn[2]={400, 30, "Мигалка", "Мигалка"};//кнопка мигалки
       btn[3]={570, 30, "Наклейки", "Наклейка"};//кнопка наклейки
       btn[4]={740, 30, "Спойлер", "Спойлер"};
+      btn[5]={1010, 30, "Сохранить", ""};
+      btn[6]={1010, 80, "Загрузить", ""};
+
 
       //массив картинок
       Pictures menuPicture[100];
@@ -160,7 +168,7 @@ int main()
         int pos2 = menuPicture[npic].adress.find("/", pos1+1);
         menuPicture[npic].category = menuPicture[npic].adress.substr(pos1+1, pos2-pos1-1);
 
-        menuPicture[npic].visible = true;
+        menuPicture[npic].visible = false;
 
     }
 
@@ -170,6 +178,7 @@ int main()
       txSetColor(TX_WHITE);
       txSetFillColor(TX_GRAY);
       txClear();
+
       //Рисование кнопок
       for(int nk=0; nk<COUNT_BTN; nk++)
       {
@@ -189,36 +198,25 @@ int main()
         //Видимость картинок в центре по категории меню-картинок
         for(int npic=0; npic < COUNT_PICTURES; npic++)
         {
-            if(txMouseButtons() == 1 &&
-            menuPicture[npic].visible &&
-            txMouseX() >= menuPicture[npic].x &&
-            txMouseX() <= menuPicture[npic].x + menuPicture[npic].w_scr &&
-            txMouseY() >= menuPicture[npic].y &&
-            txMouseY() <= menuPicture[npic].y + menuPicture[npic].h_scr)
+            if( txMouseButtons() == 1 &&
+                menuPicture[npic].visible &&
+                txMouseX() >= menuPicture[npic].x &&
+                txMouseX() <= menuPicture[npic].x + menuPicture[npic].w_scr &&
+                txMouseY() >= menuPicture[npic].y &&
+                txMouseY() <= menuPicture[npic].y + menuPicture[npic].h_scr)
             {
                 while(txMouseButtons() == 1)
                 {
                     txSleep(20);
                 }
-                  centralPicture[nCentralPictures] = {250,
-                                                      200,
-                                                      menuPicture[npic].adress,
-                                                      menuPicture[npic].image,
-                                                      menuPicture[npic].w,
-                                                      menuPicture[npic].h,
-                                                      menuPicture[npic].w_scr,
-                                                      menuPicture[npic].h_scr,
-                                                      menuPicture[npic].category,
-                                                      /*menuPicture[npic].visible*/
-                                                      true
-                                                      };
+                centralPicture[nCentralPictures] = {900,100,menuPicture[npic].adress,menuPicture[npic].image,menuPicture[npic].w,menuPicture[npic].h,menuPicture[npic].w,menuPicture[npic].h,menuPicture[npic].category, menuPicture[npic].visible};
 
-                  nCentralPictures++;
+                nCentralPictures++;
             }
         }
 
      //Видимость меню-картинок по категории кнопки
-      for(int nk=0; nk < COUNT_BTN; nk++)
+    for(int nk=0; nk < COUNT_BTN-2; nk++)
       {
         if(click(btn[nk]))
          {
@@ -237,25 +235,23 @@ int main()
          }
       }
 
-
-
       //выбор центральной кнопки
 
-        for(int npic=0; npic < COUNT_PICTURES; npic++)
+        for(int npic=0; npic < nCentralPictures; npic++)
         {
          if(txMouseButtons() == 1 &&
             centralPicture[npic].visible &&
             txMouseX() >= centralPicture[npic].x &&
-            txMouseX() <= centralPicture[npic].x + centralPicture[npic].w_scr &&
+            txMouseX() <= centralPicture[npic].x + centralPicture[npic].w &&
             txMouseY() >= centralPicture[npic].y &&
-            txMouseY() <= centralPicture[npic].y + centralPicture[npic].h_scr)
+            txMouseY() <= centralPicture[npic].y + centralPicture[npic].h)
             {
                 select = npic;
                 mouse_free = false;
             }
         }
 
-    sprintf(str, "vibor = %d   kol = %d", select, nCentralPictures);
+    //sprintf(str, "vibor= %d; kol_centr= %d; kol_Pic= %d; image= %s ", select, nCentralPictures, COUNT_PICTURES, centralPicture[select].adress.c_str());
     txTextOut(0, 0, str);
 
       //Передвижение выбранной центральной картинки клавишам
@@ -296,6 +292,7 @@ int main()
           }
       }
 
+
      // удаление картинок
      if(select>=0 && GetAsyncKeyState(VK_DELETE))
      {
@@ -306,10 +303,34 @@ int main()
 
      }
 
+     if(click(btn[5]))
+    {
+        string fileName = "1.txt"/*runFileDialog(true);*/;
+        if (fileName != "")
+        {
+           ofstream fout;
+
+           fout.open(fileName);
+
+           for (int npic = 0; npic < nCentralPictures; npic++)
+           {
+                if(centralPicture[npic].visible)
+                {
+                    fout << centralPicture[npic].x << endl;
+                    fout << centralPicture[npic].y << endl;
+                    fout << centralPicture[npic].adress << endl;
+                }
+           }
+           fout.close();
+           txMessageBox("Сохранено","Спасибо", MB_ICONINFORMATION);
+
+         }
+    }
+
       txSleep(50);
       txEnd();
 
-     }
+    }
 
      for(int npic=0; npic < COUNT_PICTURES; npic++)
      {
