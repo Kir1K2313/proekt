@@ -105,6 +105,7 @@ int readFromDir(string adress, Pictures menuPicture[], int COUNT_PICTURES)
       return COUNT_PICTURES;
 }
 
+
 string runFileDialog(bool isSave)
 {
    string fileName = "";
@@ -381,7 +382,7 @@ int main()
         {
             for(int npic = 0; npic < COUNT_PICTURES; npic++)
             {
-                centralPicture[npic].visible = false;
+                centralPicture[npic].visible = false ;
             }
 
             char buff[50];
@@ -397,7 +398,7 @@ int main()
 
                 for(int npic = 0; npic < COUNT_PICTURES; npic++)
                 {
-                    if(centralPicture[npic].adress == adress)
+                    if(menuPicture[npic].adress == adress)
                     {
 
                     centralPicture[nCentralPictures] = {x,
