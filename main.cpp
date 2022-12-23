@@ -150,7 +150,6 @@ string runFileDialog(bool isSave)
 const int COUNT_BTN = 7;
 const int BTN_SAVE  = COUNT_BTN - 2;
 const int BTN_LOAD  = COUNT_BTN - 1;
-
 int main()
 {
     txCreateWindow (1200, 800);
@@ -162,6 +161,7 @@ int main()
     int select = -1;
     bool mouse_free = false;
     int nCentralPictures = 0;
+    string PAGE = "Меню";
 
     char str[100];
 
@@ -214,10 +214,39 @@ int main()
 
     while(!GetAsyncKeyState(VK_ESCAPE))
     {
-      txBegin();
       txSetColor(TX_WHITE);
       txSetFillColor(TX_GRAY);
       txClear();
+
+      if(PAGE =="Меню")
+        {
+            txSetFillColor (TX_GRAY);
+            txRectangle(0,0,1200,800);
+            txSetFillColor (TX_GRAY);
+            txRectangle(500,100,700,150);
+            txDrawText(500,100,700,150,"Начать");
+
+            if(txMouseX() >= 500 && txMouseY()>= 100 &&
+               txMouseX() <= 700 && txMouseY()<= 150 &&
+               txMouseButtons() == 1)
+            {
+               PAGE="Редактор";
+            }
+
+               txRectangle(500,200,700,250);
+               txDrawText(500,200,700,250,"Выход");
+
+            if(txMouseX() >= 500 && txMouseY()>= 200 &&
+               txMouseX() <= 700 && txMouseY()<= 250 &&
+               txMouseButtons() == 1)
+            {
+               return 0;
+            }
+
+        }
+    if(PAGE == "Редактор")
+    {
+      txBegin();
 
       //Рисование кнопок
       for(int nk=0; nk<COUNT_BTN; nk++)
@@ -419,10 +448,11 @@ int main()
         }
     }
 
-      txSleep(50);
+      txSleep(300);
       txEnd();
 
 
+ }
 }
 
      for(int npic=0; npic < COUNT_PICTURES; npic++)

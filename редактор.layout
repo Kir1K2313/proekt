@@ -8,17 +8,31 @@
 	</File>
 	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2747" topLine="80" />
+			<Cursor1 position="10767" topLine="261" />
 		</Cursor>
 		<Folding>
-			<Collapse line="33" />
-			<Collapse line="97" />
-			<Collapse line="116" />
-			<Collapse line="118" />
-			<Collapse line="123" />
-			<Collapse line="125" />
-			<Collapse line="130" />
-			<Collapse line="132" />
+			<Collapse line="11" />
+			<Collapse line="20" />
+			<Collapse line="34" />
+			<Collapse line="43" />
+			<Collapse line="57" />
+			<Collapse line="59" />
+			<Collapse line="65" />
+			<Collapse line="75" />
+			<Collapse line="194" />
+			<Collapse line="228" />
+			<Collapse line="251" />
+			<Collapse line="276" />
+			<Collapse line="279" />
+			<Collapse line="289" />
+			<Collapse line="296" />
+			<Collapse line="378" />
+			<Collapse line="381" />
+			<Collapse line="383" />
+			<Collapse line="390" />
+			<Collapse line="399" />
+			<Collapse line="401" />
+			<Collapse line="403" />
 		</Folding>
 	</File>
 	<File name="pictures.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">

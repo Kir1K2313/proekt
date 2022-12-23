@@ -2570,3 +2570,507 @@ Run file:	D:\Буренин Кирилл\редактор\main.exe
 Directory:	D:\Буренин Кирилл\редактор
 
 --------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: D:\Буренин Кирилл\редактор\main.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x0045300C в функции _M_is_leaked() в файле c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h на строке 45. Попытка прочесть данные по адресу 0xFFFFFFFC в модуле D:\Буренин Кирилл\редактор\main.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400], Instance: 0x005092FC (32-bit), Flags: CMdRE0, Thread: 0x1A3C (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0045300C in D:\Буренин Кирилл\редактор\main.exe: _M_is_leaked() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 1 0x00481F1B in D:\Буренин Кирилл\редактор\main.exe: swap() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 2 0x00489259 in D:\Буренин Кирилл\редактор\main.exe: operator=() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 3 0x0044D609 in D:\Буренин Кирилл\редактор\main.exe: operator=() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 4 0x0042C938 in D:\Буренин Кирилл\редактор\main.exe: main() at D:/Буренин Кирилл/редактор/main.cpp (134):
+
+    132:       btn[3]={570, 30, "Наклейки", "Наклейка"};//кнопка наклейки
+    133:       btn[4]={740, 30, "Спойлер", "Спойлер"};
+=>  134:       btn[5]={910, 30, "Сохранить", ""};
+    135:       btn[6]={910, 30, "Загрузить", ""};
+    136: 
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in int main() at D:\Буренин Кирилл\редактор\main.cpp (116):
+
+    114:     txCreateWindow (1200, 800);
+    115:     txDisableAutoPause();
+=>  116:     txTextCursor (false);
+    117: 
+    118:     int COUNT_BTN = 5;
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\codeblocks\codeblocks\mingw\include\txlib.h
+Compiled:	Dec  7 2022 18:54:18, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Dec 07 2022 18:54:31
+
+Run file:	D:\Буренин Кирилл\редактор\main.exe
+Directory:	D:\Буренин Кирилл\редактор
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\Буренин Кирилл\редактор\main.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x0045300C в функции _M_is_leaked() в файле c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h на строке 45. Попытка прочесть данные по адресу 0xFFFFFFFC в модуле D:\Буренин Кирилл\редактор\main.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400], Instance: 0x005092FC (32-bit), Flags: CMdRE0, Thread: 0x1A3C (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0045300C in D:\Буренин Кирилл\редактор\main.exe: _M_is_leaked() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 1 0x00481F1B in D:\Буренин Кирилл\редактор\main.exe: swap() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 2 0x00489259 in D:\Буренин Кирилл\редактор\main.exe: operator=() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 3 0x0044D609 in D:\Буренин Кирилл\редактор\main.exe: operator=() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 4 0x0042C938 in D:\Буренин Кирилл\редактор\main.exe: main() at D:/Буренин Кирилл/редактор/main.cpp (134):
+
+    132:       btn[3]={570, 30, "Наклейки", "Наклейка"};//кнопка наклейки
+    133:       btn[4]={740, 30, "Спойлер", "Спойлер"};
+=>  134:       btn[5]={910, 30, "Сохранить", ""};
+    135:       btn[6]={910, 30, "Загрузить", ""};
+    136: 
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in int main() at D:\Буренин Кирилл\редактор\main.cpp (116):
+
+    114:     txCreateWindow (1200, 800);
+    115:     txDisableAutoPause();
+=>  116:     txTextCursor (false);
+    117: 
+    118:     int COUNT_BTN = 5;
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\codeblocks\codeblocks\mingw\include\txlib.h
+Compiled:	Dec  7 2022 18:54:18, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Dec 07 2022 18:54:31
+
+Run file:	D:\Буренин Кирилл\редактор\main.exe
+Directory:	D:\Буренин Кирилл\редактор
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: D:\Буренин Кирилл\редактор\main.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x0045300C в функции _M_is_leaked() в файле c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h на строке 45. Попытка прочесть данные по адресу 0xFFFFFFFC в модуле D:\Буренин Кирилл\редактор\main.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400], Instance: 0x005092FC (32-bit), Flags: CMdRE0, Thread: 0x1B34 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0045300C in D:\Буренин Кирилл\редактор\main.exe: _M_is_leaked() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 1 0x00481F1B in D:\Буренин Кирилл\редактор\main.exe: swap() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 2 0x00489259 in D:\Буренин Кирилл\редактор\main.exe: operator=() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 3 0x0044D609 in D:\Буренин Кирилл\редактор\main.exe: operator=() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 4 0x0042C938 in D:\Буренин Кирилл\редактор\main.exe: main() at D:/Буренин Кирилл/редактор/main.cpp (134):
+
+    132:       btn[3]={570, 30, "Наклейки", "Наклейка"};//кнопка наклейки
+    133:       btn[4]={740, 30, "Спойлер", "Спойлер"};
+=>  134:       btn[5]={910, 30, "Сохранить", ""};
+    135:       btn[6]={910, 80, "Загрузить", ""};
+    136: 
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in int main() at D:\Буренин Кирилл\редактор\main.cpp (116):
+
+    114:     txCreateWindow (1200, 800);
+    115:     txDisableAutoPause();
+=>  116:     txTextCursor (false);
+    117: 
+    118:     int COUNT_BTN = 5;
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\codeblocks\codeblocks\mingw\include\txlib.h
+Compiled:	Dec  7 2022 18:55:39, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Dec 07 2022 18:55:51
+
+Run file:	D:\Буренин Кирилл\редактор\main.exe
+Directory:	D:\Буренин Кирилл\редактор
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\Буренин Кирилл\редактор\main.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x0045300C в функции _M_is_leaked() в файле c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h на строке 45. Попытка прочесть данные по адресу 0xFFFFFFFC в модуле D:\Буренин Кирилл\редактор\main.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400], Instance: 0x005092FC (32-bit), Flags: CMdRE0, Thread: 0x1B34 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0045300C in D:\Буренин Кирилл\редактор\main.exe: _M_is_leaked() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 1 0x00481F1B in D:\Буренин Кирилл\редактор\main.exe: swap() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 2 0x00489259 in D:\Буренин Кирилл\редактор\main.exe: operator=() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 3 0x0044D609 in D:\Буренин Кирилл\редактор\main.exe: operator=() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 4 0x0042C938 in D:\Буренин Кирилл\редактор\main.exe: main() at D:/Буренин Кирилл/редактор/main.cpp (134):
+
+    132:       btn[3]={570, 30, "Наклейки", "Наклейка"};//кнопка наклейки
+    133:       btn[4]={740, 30, "Спойлер", "Спойлер"};
+=>  134:       btn[5]={910, 30, "Сохранить", ""};
+    135:       btn[6]={910, 80, "Загрузить", ""};
+    136: 
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in int main() at D:\Буренин Кирилл\редактор\main.cpp (116):
+
+    114:     txCreateWindow (1200, 800);
+    115:     txDisableAutoPause();
+=>  116:     txTextCursor (false);
+    117: 
+    118:     int COUNT_BTN = 5;
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\codeblocks\codeblocks\mingw\include\txlib.h
+Compiled:	Dec  7 2022 18:55:39, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Dec 07 2022 18:55:52
+
+Run file:	D:\Буренин Кирилл\редактор\main.exe
+Directory:	D:\Буренин Кирилл\редактор
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: D:\Буренин Кирилл\редактор\main.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x004533FC в функции _M_is_leaked() в файле c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h на строке 45. Попытка прочесть данные по адресу 0x000000E2 в модуле D:\Буренин Кирилл\редактор\main.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400], Instance: 0x005092FC (32-bit), Flags: CMdRE0, Thread: 0x2114 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x004533FC in D:\Буренин Кирилл\редактор\main.exe: _M_is_leaked() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 1 0x0048230B in D:\Буренин Кирилл\редактор\main.exe: swap() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 2 0x00489649 in D:\Буренин Кирилл\редактор\main.exe: operator=() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 3 0x0044DBBE in D:\Буренин Кирилл\редактор\main.exe: operator=() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 4 0x0042E22E in D:\Буренин Кирилл\редактор\main.exe: main() at D:/Буренин Кирилл/редактор/main.cpp (373):
+
+    371:                                                         menuPicture[npic].h,
+    372:                                                         menuPicture[npic].category,
+=>  373:                                                         true};
+    374:                     nCentralPictures++;
+    375:                     }
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in bool click(Button) at D:\Буренин Кирилл\редактор\main.cpp (40):
+
+     38:         txMouseX() <= btn.x+110 &&
+     39:         txMouseY() >= btn.y &&
+=>   40:         txMouseY() <= btn.y+40);
+     41: }
+     42: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\codeblocks\codeblocks\mingw\include\txlib.h
+Compiled:	Dec 16 2022 18:28:44, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Dec 16 2022 18:28:56
+
+Run file:	D:\Буренин Кирилл\редактор\main.exe
+Directory:	D:\Буренин Кирилл\редактор
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: D:\Буренин Кирилл\редактор\main.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x004533FC в функции _M_is_leaked() в файле c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h на строке 45. Попытка прочесть данные по адресу 0x000000E2 в модуле D:\Буренин Кирилл\редактор\main.exe. Спасибо _txVectoredExceptionHandler(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400], Instance: 0x005092FC (32-bit), Flags: CMdRE0, Thread: 0x2114 (Main). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x004533FC in D:\Буренин Кирилл\редактор\main.exe: _M_is_leaked() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 1 0x0048230B in D:\Буренин Кирилл\редактор\main.exe: swap() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 2 0x00489649 in D:\Буренин Кирилл\редактор\main.exe: operator=() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 3 0x0044DBBE in D:\Буренин Кирилл\редактор\main.exe: operator=() at c:/codeblocks/codeblocks/mingw/include/c++/4.8.1/debug/functions.h (45):
+
+     43:   // An arbitrary iterator pointer is not singular.
+     44:   inline bool
+=>   45:   __check_singular_aux(const void*) { return false; }
+     46: 
+     47:   // We may have an iterator that derives from _Safe_iterator_base but isn't
+
+# 4 0x0042E22E in D:\Буренин Кирилл\редактор\main.exe: main() at D:/Буренин Кирилл/редактор/main.cpp (373):
+
+    371:                                                         menuPicture[npic].h,
+    372:                                                         menuPicture[npic].category,
+=>  373:                                                         true};
+    374:                     nCentralPictures++;
+    375:                     }
+
+--------------------------------------------------
+Стек вызовов TX:
+
+# 0 in bool click(Button) at D:\Буренин Кирилл\редактор\main.cpp (40):
+
+     38:         txMouseX() <= btn.x+110 &&
+     39:         txMouseY() >= btn.y &&
+=>   40:         txMouseY() <= btn.y+40);
+     41: }
+     42: 
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 171, Date: 2022-07-23 02:08:28 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	c:\codeblocks\codeblocks\mingw\include\txlib.h
+Compiled:	Dec 16 2022 18:28:44, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, DEBUG
+Started:	Dec 16 2022 18:28:56
+
+Run file:	D:\Буренин Кирилл\редактор\main.exe
+Directory:	D:\Буренин Кирилл\редактор
+
+--------------------------------------------------
