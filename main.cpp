@@ -1,466 +1,195 @@
 #include "TXLib.h"
-#include <iostream>
 #include <fstream>
-#include "dirent.h"
-#include <conio.h>
-#include <stdlib.h>
-#include <stdio.h>
-
 using namespace std;
 
-struct Button
+struct Form
 {
-   int x;
-   int y;
-   const char* text;
-   string category;
+  string text_question;
+  int right_answer;
+  string text_answer1;
+  string text_answer2;
+  string text_answer3;
+  HDC pic_fon;
 };
 
-//функция кнопки
-void drawButton(Button btn)
+bool click_answer(int x)
 {
-//x = 100;y = 30;
-      txSetColor(TX_BLACK);
-      txSetFillColor(TX_GRAY);
-      Win32::RoundRect(txDC(), btn.x+5, btn.y+5, btn.x+115, btn.y+45, 30, 30);
-      txSetColor(TX_BLACK);
-      txSetFillColor(TX_WHITE);
-      Win32::RoundRect(txDC(), btn.x, btn.y , btn.x+110, btn.y+40, 30, 30);
-      txSetColor(TX_BLACK);
-      txSelectFont("Times New Roman", 28);
-      txDrawText(btn.x,btn.y,btn.x+110,btn.y+40, btn.text);
+  return(txMouseButtons() == 1 &&
+         txMouseX() >= x &&
+         txMouseY() >= 350 &&
+         txMouseX() <= x+200 &&
+         txMouseY() <= 450);
 }
 
-bool click(Button btn)
+void draw_answer(int x, string text, int font)
 {
- return (txMouseButtons() == 1 &&
-        txMouseX() >= btn.x &&
-        txMouseX() <= btn.x+110 &&
-        txMouseY() >= btn.y &&
-        txMouseY() <= btn.y+40);
+  txSetColor(TX_WHITE);
+  txSetFillColor(TX_BLACK);
+  txSelectFont("Arial", font);
+  Win32::RoundRect(txDC(), x, 350, x+200, 450, 20, 20 );
+  txDrawText (x, 350, x+200, 450, text.c_str());
 }
 
-struct Pictures
+string getPart(string str, int *pos2)
 {
-  int x;
-  int y;
-  string adress;
-  HDC image;
-  int w;
-  int h;
-  int w_scr;
-  int h_scr;
-  string category;
-  bool visible;
-};
-
-void drawPicture(Pictures pct)
-{
-   if(pct.visible)
-   {
-        Win32::TransparentBlt(txDC(), pct.x, pct.y, pct.w_scr, pct.h_scr, pct.image, 0, 0, pct.w, pct.h, TX_WHITE);
-   }
+    int pos1 = *pos2 + 1;
+    *pos2 = str.find(",", pos1);
+    string Part = str.substr(pos1,*pos2 - pos1);
+    return Part;
 }
 
-int get_w(string adress)
-{
-   FILE *f1 = fopen(adress.c_str(), "rb");
-   unsigned char headerinfo[54];
-   fread(headerinfo, sizeof(unsigned char),54,f1);
-
-   int w = *(int*)&headerinfo[18];
-   return w;
-}
-
-int get_h(string adress)
-{
-   FILE *f1 = fopen(adress.c_str(), "rb");
-   unsigned char headerinfo[54];
-   fread(headerinfo, sizeof(unsigned char),54,f1);
-
-   int h = *(int*)&headerinfo[22];
-   return h;
-}
-
-int readFromDir(string adress, Pictures menuPicture[], int COUNT_PICTURES)
-{
-     DIR *dir;
-     struct dirent *ent;
-     int lastY = 100;
-     if ((dir = opendir (adress.c_str())) != NULL)
-        {
-            while ((ent = readdir (dir))  != NULL)
-            {
-                if((string)ent->d_name != "." && (string)ent->d_name != "..")
-                {
-                    menuPicture[COUNT_PICTURES].y = lastY;
-                    menuPicture[COUNT_PICTURES].adress = adress + (string)ent->d_name;
-                    COUNT_PICTURES ++;
-                    lastY += 100;
-                }
-            }
-            closedir (dir);
-
-        }
-      return COUNT_PICTURES;
-}
-
-
-string runFileDialog(bool isSave)
-{
-   string fileName = "";
-   OPENFILENAME ofn;
-   TCHAR szFile[260] = {0};
-
-   ZeroMemory(&ofn, sizeof(ofn));
-   ofn.lStructSize = sizeof(ofn);
-   ofn.hwndOwner = txWindow();
-   ofn.lpstrFile = szFile;
-   ofn.nMaxFile = sizeof(szFile);
-   ofn.lpstrFilter = ("Text\0*.TXT\0");
-   ofn.nFilterIndex = 1;
-   ofn.lpstrFileTitle = NULL;
-   ofn.nMaxFileTitle = 0;
-   ofn.lpstrInitialDir = NULL;
-   ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
-
-   if (isSave)
-   {
-      if (GetSaveFileName(&ofn) == TRUE)
-      {
-         fileName = ofn.lpstrFile;
-
-         if (fileName.find(".txt") > 1000)
-         {
-           fileName =  fileName + ".txt";
-         }
-      }
-   }
-   else
-   {
-      if (GetOpenFileName(&ofn) == TRUE)
-      {
-         fileName = ofn.lpstrFile;
-      }
-   }
-
-   return fileName;
-}
-
-const int COUNT_BTN = 7;
-const int BTN_SAVE  = COUNT_BTN - 2;
-const int BTN_LOAD  = COUNT_BTN - 1;
 int main()
 {
-    txCreateWindow (1200, 800);
-    txDisableAutoPause();
+    txCreateWindow (800, 600);
     txTextCursor (false);
 
-    int COUNT_BTN = 7;
-    int COUNT_PICTURES = 0;
-    int select = -1;
-    bool mouse_free = false;
-    int nCentralPictures = 0;
-    string PAGE = "Меню";
+    HDC fon = txLoadImage("картинки/фон.bmp");
+    int n_question = 1;
+    int result = 0;
+    Form form;
+    Form form_list[50];
+    string str;
+    int n = 0;
+    ifstream file("13131.txt");
+    int font = 35;
+    string PAGE = "Start";
 
-    char str[100];
-
-
-     //Массив кнопок
-      Button btn[COUNT_BTN];
-      btn[0]={60, 30, "Корпус", "Корпус"};//кнопка корпус
-      btn[1]={230, 30, "Колёса", "Колёса"};//кнопка колёса
-      btn[2]={400, 30, "Мигалка", "Мигалка"};//кнопка мигалки
-      btn[3]={570, 30, "Наклейки", "Наклейка"};//кнопка наклейки
-      btn[4]={740, 30, "Спойлер", "Спойлер"};
-      btn[5]={1010, 30, "Сохранить", ""};
-      btn[6]={1010, 80, "Загрузить", ""};
-
-
-      //массив картинок
-      Pictures menuPicture[100];
-
-      //массив картинок в центре
-      Pictures centralPicture[100];
-
-      COUNT_PICTURES = readFromDir("Pictures/Корпус/",menuPicture,COUNT_PICTURES);
-      COUNT_PICTURES = readFromDir("Pictures/Наклейка/",menuPicture,COUNT_PICTURES);
-      COUNT_PICTURES = readFromDir("Pictures/Колёса/",menuPicture,COUNT_PICTURES);
-      COUNT_PICTURES = readFromDir("Pictures/Мигалка/",menuPicture,COUNT_PICTURES);
-      COUNT_PICTURES = readFromDir("Pictures/Спойлер/",menuPicture,COUNT_PICTURES);
-
-
-
-    for(int npic=0; npic < COUNT_PICTURES; npic++)
+    while(file.good())
     {
-        menuPicture[npic].x = 50;
+        getline(file, str);
+        int pos2 = -1;
 
-        menuPicture[npic].image = txLoadImage(menuPicture[npic].adress.c_str());
-
-        menuPicture[npic].w = get_w(menuPicture[npic].adress);
-        menuPicture[npic].h = get_h(menuPicture[npic].adress);
-
-        menuPicture[npic].w_scr = menuPicture[npic].w;
-        menuPicture[npic].h_scr = menuPicture[npic].h;
-
-
-        int pos1 = menuPicture[npic].adress.find("/");
-        int pos2 = menuPicture[npic].adress.find("/", pos1+1);
-        menuPicture[npic].category = menuPicture[npic].adress.substr(pos1+1, pos2-pos1-1);
-
-        menuPicture[npic].visible = false;
-
+        form_list[n].text_question = getPart(str,&pos2);
+        form_list[n].right_answer = atoi(getPart(str,&pos2).c_str());
+        form_list[n].text_answer1 = getPart(str,&pos2);
+        form_list[n].text_answer2 = getPart(str,&pos2);
+        form_list[n].text_answer3 = getPart(str,&pos2);
+        form_list[n].pic_fon =  txLoadImage(getPart(str,&pos2).c_str());
+        n++;
     }
+    file.close();
 
-    while(!GetAsyncKeyState(VK_ESCAPE))
+    while(n_question<=n)
     {
-      txSetColor(TX_WHITE);
-      txSetFillColor(TX_GRAY);
-      txClear();
-
-      if(PAGE =="Меню")
+        if(PAGE=="Start")
         {
-            txSetFillColor (TX_GRAY);
-            txRectangle(0,0,1200,800);
-            txSetFillColor (TX_GRAY);
-            txRectangle(500,100,700,150);
-            txDrawText(500,100,700,150,"Начать");
+             txBegin();
+             txSetColor(TX_WHITE,5);
+             txSetFillColor(TX_BLACK);
+             txRectangle(txDC(), 0,0,800,600);
+             txSelectFont("Arial", 55);
+             txDrawText(50,50,750,150, "Тест по геншин импакту");
+             txSelectFont("Arial", 45);
+             txDrawText(50,200,750,350, "Проверь свои знании");
+             txSelectFont("Arial", 35);
+             txRectangle(300,450,500,500);
+             txDrawText(300,450,500,500,"Начать");
 
-            if(txMouseX() >= 500 && txMouseY()>= 100 &&
-               txMouseX() <= 700 && txMouseY()<= 150 &&
-               txMouseButtons() == 1)
-            {
-               PAGE="Редактор";
-            }
-
-               txRectangle(500,200,700,250);
-               txDrawText(500,200,700,250,"Выход");
-
-            if(txMouseX() >= 500 && txMouseY()>= 200 &&
-               txMouseX() <= 700 && txMouseY()<= 250 &&
-               txMouseButtons() == 1)
-            {
-               return 0;
-            }
-
-        }
-    if(PAGE == "Редактор")
-    {
-      txBegin();
-
-      //Рисование кнопок
-      for(int nk=0; nk<COUNT_BTN; nk++)
-      {
-         drawButton(btn[nk]);
-      }
-
-      for(int npic=0; npic < COUNT_PICTURES; npic++)
-      {
-         drawPicture(menuPicture[npic]);
-      }
-
-      for(int npic=0; npic < nCentralPictures; npic++)
-      {
-         drawPicture(centralPicture[npic]);
-      }
-
-        //Видимость картинок в центре по категории меню-картинок
-        for(int npic=0; npic < COUNT_PICTURES; npic++)
-        {
-            if( txMouseButtons() == 1 &&
-                menuPicture[npic].visible &&
-                txMouseX() >= menuPicture[npic].x &&
-                txMouseX() <= menuPicture[npic].x + menuPicture[npic].w_scr &&
-                txMouseY() >= menuPicture[npic].y &&
-                txMouseY() <= menuPicture[npic].y + menuPicture[npic].h_scr)
-            {
-                while(txMouseButtons() == 1)
+             if( txMouseX() >= 300 && txMouseY()>= 450 &&
+                 txMouseX() <= 500 && txMouseY()<= 500 &&
+                 txMouseButtons() == 1)
                 {
-                    txSleep(20);
+                  PAGE="Тест";
                 }
-                centralPicture[nCentralPictures] = {900,
-                                                    100,
-                                                    menuPicture[npic].adress,
-                                                    menuPicture[npic].image,
-                                                    menuPicture[npic].w,
-                                                    menuPicture[npic].h,
-                                                    menuPicture[npic].w,
-                                                    menuPicture[npic].h,
-                                                    menuPicture[npic].category,
-                                                    menuPicture[npic].visible};
-
-                nCentralPictures++;
-            }
+            txEnd();
+            txSleep(10);
         }
 
-     //Видимость меню-картинок по категории кнопки
-    for(int nk=0; nk < COUNT_BTN-2; nk++)
-      {
-        if(click(btn[nk]))
-         {
-            while(txMouseButtons() == 1)
-            {
-                txSleep(20);
-            }
-            for(int npic=0; npic < COUNT_PICTURES; npic++)
-            {
-               menuPicture[npic].visible = false;
-               if(menuPicture[npic].category == btn[nk].category)
-               {
-                 menuPicture[npic].visible = true;
-               }
-            }
-         }
-      }
-
-      //выбор центральной кнопки
-
-        for(int npic=0; npic < nCentralPictures; npic++)
+        if(PAGE == "Тест")
         {
-         if(txMouseButtons() == 1 &&
-            centralPicture[npic].visible &&
-            txMouseX() >= centralPicture[npic].x &&
-            txMouseX() <= centralPicture[npic].x + centralPicture[npic].w &&
-            txMouseY() >= centralPicture[npic].y &&
-            txMouseY() <= centralPicture[npic].y + centralPicture[npic].h)
+            txBegin();
+            txSetFillColor(TX_BLACK);
+            txClear();
+
+            form = form_list[n_question - 1];
+
+            txSetColor(TX_BLACK);
+            txSetFillColor(TX_WHITE);
+            font = 35;
+            txSelectFont("Arial", font);
+            txBitBlt (txDC(), 0, 0, 800,600, form.pic_fon);
+            txDrawText(50, 50 ,750, 250, form.text_question.c_str());
+
+            if(n_question == 8)
             {
-                select = npic;
-                mouse_free = false;
+               font = 25;
             }
-        }
+            draw_answer(50, form.text_answer1, font);
+            draw_answer(300, form.text_answer2, font);
+            draw_answer(550, form.text_answer3, font);
 
+            txSetColor(TX_BLACK);
+            font = 35;
+            txSelectFont("Arial", font);
+            char str[10];
+            sprintf(str, "Вопрос %d/%d", n_question, n);
+            txDrawText(50, 0 ,750, 50, str );
 
-
-      //Передвижение выбранной центральной картинки клавишам
-      if(select >= 0)
-      {
-         if(GetAsyncKeyState(VK_RIGHT)) centralPicture[select].x += 3;
-         if(GetAsyncKeyState(VK_LEFT))  centralPicture[select].x -= 3;
-         if(GetAsyncKeyState(VK_UP))    centralPicture[select].y -= 3;
-         if(GetAsyncKeyState(VK_DOWN))  centralPicture[select].y += 3;
-
-         if(GetAsyncKeyState(VK_OEM_PLUS))
-         {
-            centralPicture[select].w_scr = centralPicture[select].w_scr * 1.02;
-            centralPicture[select].h_scr = centralPicture[select].h_scr * 1.02;
-         }
-
-         if(GetAsyncKeyState(VK_OEM_MINUS))
-         {
-            centralPicture[select].w_scr = centralPicture[select].w_scr * 0.98;
-            centralPicture[select].h_scr = centralPicture[select].h_scr * 0.98;
-         }
-      }
-
-      //Передвижение выбранной центральной картинки мышкой
-      if(select >= 0)
-      {
-          if(txMouseButtons() == 1 && !mouse_free)
-          {
-            centralPicture[select].x  = txMouseX() - centralPicture[select].w_scr/2;
-            centralPicture[select].y  = txMouseY() - centralPicture[select].h_scr/2;
-          }
-          else
-          {
-                if(txMouseButtons() != 1)
-                {
-                  mouse_free = true;
-                }
-          }
-      }
-
-
-     // удаление картинок
-     if(select>=0 && GetAsyncKeyState(VK_DELETE))
-     {
-         centralPicture[select] = centralPicture[nCentralPictures - 1];
-         nCentralPictures--;
-         select=-1;
-         mouse_free = true;
-
-     }
-
-     if(click(btn[5]))
-    {
-        string fileName = runFileDialog(true);
-        if (fileName != "")
-        {
-           ofstream fout;
-
-           fout.open(fileName);
-
-           for (int npic = 0; npic < nCentralPictures; npic++)
-           {
-                if(centralPicture[npic].visible)
-                {
-                    fout << centralPicture[npic].x << endl;
-                    fout << centralPicture[npic].y << endl;
-                    fout << centralPicture[npic].adress << endl;
-                }
-           }
-           fout.close();
-           txMessageBox("Сохранено","Спасибо", MB_ICONINFORMATION);
-
-         }
-    }
-
-    if (click(btn[6]))
-    {
-        string fileName = runFileDialog(true);
-        if(fileName != "")
-        {
-            for(int npic = 0; npic < COUNT_PICTURES; npic++)
+            if (click_answer(50))
             {
-                centralPicture[npic].visible = false ;
+              while(txMouseButtons() == 1) txSleep(10);
+              txSleep(500);
+              n_question++;
+              if(form.right_answer == 1)
+              {
+                result++;
+              }
+            }
+            if (click_answer(300))
+            {
+              while(txMouseButtons() == 1) txSleep(10);
+              txSleep(500);
+              n_question++;
+              if(form.right_answer == 2)
+              {
+                result++;
+              }
             }
 
-            char buff[50];
-            ifstream fin(fileName);
-            while (fin.good())
+             if (click_answer(550))
             {
-                fin.getline(buff, 50);
-                int x = atoi(buff);
-                fin.getline(buff, 50);
-                int y = atoi(buff);
-                fin.getline(buff, 50);
-                string adress = (buff);
-
-                for(int npic = 0; npic < COUNT_PICTURES; npic++)
-                {
-                    if(menuPicture[npic].adress == adress)
-                    {
-
-                    centralPicture[nCentralPictures] = {x,
-                                                        y,
-                                                        menuPicture[npic].adress,
-                                                        menuPicture[npic].image,
-                                                        menuPicture[npic].w,
-                                                        menuPicture[npic].h,
-                                                        menuPicture[npic].w,
-                                                        menuPicture[npic].h,
-                                                        menuPicture[npic].category,
-                                                        true};
-                    nCentralPictures++;
-                    }
-                }
+              while(txMouseButtons() == 1) txSleep(10);
+              txSleep(500);
+              n_question++;
+              if(form.right_answer == 3)
+              {
+                result++;
+              }
             }
-            fin.close();
+
+            txEnd;
+            txSleep(50);
         }
     }
+    txSetColor(TX_WHITE);
+    txSetFillColor(TX_BLACK);
+    txClear();
+    txBitBlt(txDC(), 0,0,800,600,fon);
+    txDrawText(50, 50 ,750, 200, "Ваш результат:");
+    char stroka[10];
+    sprintf(stroka, "%d", result);
+    txDrawText(50, 150 ,750, 250, stroka);
 
-      txSleep(300);
-      txEnd();
-
-
- }
-}
-
-     for(int npic=0; npic < COUNT_PICTURES; npic++)
-     {
-        txDeleteDC(menuPicture[npic].image);
-     }
-
+    if (result==10)
+    {
+        txDrawText(250, 300, 550, 400, "Знаток" );
+        txDrawText(50,350,750,600, "Вы отлично разбираетесь в данной вселенной");
+    }
+    else if(result <=10 && result>=6 )
+    {
+        txDrawText(250,300, 550, 400, "Cредний" );
+        txDrawText(50,350,750,750, "Вы достаточно хорошо разбираетесь в данной вселенной");
+    }
+    else if(result<=5)
+    {
+        txDrawText(250, 300, 550, 400, "Новичок" );
+        txSelectFont("Arial", 30);
+        txDrawText(50,410,750,600, "Вы к сожалению не очень хорошо разбираетесь в данной вселенной");
+    }
+    for(int i=0; i<=n; i++)
+    {
+    txDeleteDC(form_list[i].pic_fon);
+    }
 
     return 0;
 }
-
